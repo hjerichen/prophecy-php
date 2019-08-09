@@ -1,0 +1,25 @@
+{
+    "name": "hjerichen/prophecy-php",
+    "description": "Prophesize PHP Functions.",
+    "type": "testing",
+    "authors": [
+        {
+            "name": "Heiko Jerichen",
+            "email": "heiko@jerichen.de"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "phpspec/prophecy": "^1.8.1",
+        "phpunit/php-text-template": "^1.2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "HJerichen\\ProphecyPHP\\": "src/"
+        }
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master",
+        "phpunit/phpunit": "^8.0"
+    }
+}
