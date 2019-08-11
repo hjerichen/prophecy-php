@@ -16,6 +16,8 @@ use Text_Template;
  */
 class NamespaceProphecy implements ProphecyInterface
 {
+    use PHPBuiltInFunctions;
+
     /**
      * @var Prophet
      */
@@ -47,38 +49,6 @@ class NamespaceProphecy implements ProphecyInterface
         $this->namespace = $namespace;
         $this->functionProphecyStorage = $functionProphecyStorage;
         $this->textTemplate = $textTemplate;
-    }
-
-    /**
-     * Return current Unix timestamp
-     * @link https://php.net/manual/en/function.time.php
-     * @return MethodProphecy
-     */
-    public function time(): MethodProphecy
-    {
-        return $this->__call('time', func_get_args());
-    }
-
-    /**
-     * @param string $format
-     * @param int|null $timestamp
-     * @return MethodProphecy
-     */
-    public function date(string $format, int $timestamp = null): MethodProphecy
-    {
-        return $this->__call('date', func_get_args());
-    }
-
-    /**
-     * @param string $filename
-     * @param mixed $data
-     * @param int $flags
-     * @param resource | null $context
-     * @return MethodProphecy
-     */
-    public function file_put_contents(string $filename, $data, int $flags = 0, $context = null): MethodProphecy
-    {
-        return $this->__call('file_put_contents', func_get_args());
     }
 
     /**
