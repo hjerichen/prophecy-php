@@ -33,7 +33,7 @@ trait PHPBuiltInFunctions
      * @since 4.3.0
      * @since 5.0
      */
-    public function file_get_contents(string $filename): MethodProphecy
+    public function file_get_contents($filename): MethodProphecy
     {
         return $this->__call('file_get_contents', func_get_args());
     }
@@ -94,7 +94,7 @@ trait PHPBuiltInFunctions
      * </p>
      * @since 5.0
      */
-    public function file_put_contents(string $filename, string $content, int $flags = 0): MethodProphecy
+    public function file_put_contents($filename, $content, $flags = 0): MethodProphecy
     {
         return $this->__call('file_put_contents', func_get_args());
     }
@@ -121,7 +121,7 @@ trait PHPBuiltInFunctions
      * E_WARNING is generated.
      * @since 5.0
      */
-    public function scandir(string $directory, int $sorting_order = null, $context = null): MethodProphecy
+    public function scandir($directory, $sorting_order = null, $context = null): MethodProphecy
     {
         return $this->__call('scandir', func_get_args());
     }
@@ -137,7 +137,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function is_file(string $filename): MethodProphecy
+    public function is_file($filename): MethodProphecy
     {
         return $this->__call('is_file', func_get_args());
     }
@@ -161,7 +161,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function touch(string $filename, int $time = null, int $atime = null): MethodProphecy
+    public function touch($filename, $time = null, $atime = null): MethodProphecy
     {
         return $this->__call('touch', func_get_args());
     }
@@ -177,7 +177,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function unlink(string $filename, $context = null): MethodProphecy
+    public function unlink($filename, $context = null): MethodProphecy
     {
         return $this->__call('unlink', func_get_args());
     }
@@ -204,7 +204,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function copy(string $source, string $dest, $context = null): MethodProphecy
+    public function copy($source, $dest, $context = null): MethodProphecy
     {
         return $this->__call('copy', func_get_args());
     }
@@ -223,7 +223,7 @@ trait PHPBuiltInFunctions
      * @return MethodProphecy a timestamp on success, false otherwise. Previous to PHP 5.1.0,
      * this function would return -1 on failure.
      */
-    public function strtotime(string $time, int $now = null): MethodProphecy
+    public function strtotime($time, $now = null): MethodProphecy
     {
         return $this->__call('strtotime', func_get_args());
     }
@@ -251,7 +251,7 @@ trait PHPBuiltInFunctions
      * @return MethodProphecy the memory peak in bytes.
      * @since 5.2.0
      */
-    public function memory_get_peak_usage(bool $real_usage = null): MethodProphecy
+    public function memory_get_peak_usage($real_usage = null): MethodProphecy
     {
         return $this->__call('memory_get_peak_usage', func_get_args());
     }
@@ -268,7 +268,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function sleep(int $seconds): MethodProphecy
+    public function sleep($seconds): MethodProphecy
     {
         return $this->__call('sleep', func_get_args());
     }
@@ -284,7 +284,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function usleep(int $micro_seconds): MethodProphecy
+    public function usleep($micro_seconds): MethodProphecy
     {
         return $this->__call('usleep', func_get_args());
     }
@@ -295,7 +295,7 @@ trait PHPBuiltInFunctions
      * @return MethodProphecy
      * @since 7.1
      */
-    public function pcntl_async_signals(bool $on = null): MethodProphecy
+    public function pcntl_async_signals($on = null): MethodProphecy
     {
         return $this->__call('pcntl_async_signals', func_get_args());
     }
@@ -330,7 +330,7 @@ trait PHPBuiltInFunctions
      * @since 4.1.0
      * @since 5.0
      */
-    public function pcntl_signal(int $signo, callable $handler, bool $restart_syscalls = null): MethodProphecy
+    public function pcntl_signal($signo, callable $handler, bool $restart_syscalls = null): MethodProphecy
     {
         return $this->__call('pcntl_signal', func_get_args());
     }
@@ -372,7 +372,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function posix_getsid(int $pid): MethodProphecy
+    public function posix_getsid($pid): MethodProphecy
     {
         return $this->__call('posix_getsid', func_get_args());
     }
@@ -442,7 +442,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function exec(string $command, array $output = null, int $return_var = null): MethodProphecy
+    public function exec($command, $output = null, $return_var = null): MethodProphecy
     {
         return $this->__call('exec', func_get_args());
     }
@@ -490,7 +490,7 @@ trait PHPBuiltInFunctions
      * @since 5.0
      * @since 7.0
      */
-    public function unserialize(string $str, array $options = null): MethodProphecy
+    public function unserialize($str, $options = null): MethodProphecy
     {
         return $this->__call('unserialize', func_get_args());
     }
@@ -512,7 +512,7 @@ trait PHPBuiltInFunctions
      * @since 4.2.0
      * @since 5.0
      */
-    public function var_export($expression, bool $return = null): MethodProphecy
+    public function var_export($expression, $return = null): MethodProphecy
     {
         return $this->__call('var_export', func_get_args());
     }
@@ -746,7 +746,7 @@ trait PHPBuiltInFunctions
      * </table>
      * @since 5.0
      */
-    public function dns_get_record(string $hostname, int $type = DNS_ANY, array $authns = null, array $addtl = null, bool $raw = null): MethodProphecy
+    public function dns_get_record($hostname, $type = DNS_ANY, $authns = null, $addtl = null, $raw = null): MethodProphecy
     {
         return $this->__call('dns_get_record', func_get_args());
     }
@@ -779,7 +779,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function file_exists(string $filename): MethodProphecy
+    public function file_exists($filename): MethodProphecy
     {
         return $this->__call('file_exists', func_get_args());
     }
@@ -796,7 +796,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function filemtime(string $filename): MethodProphecy
+    public function filemtime($filename): MethodProphecy
     {
         return $this->__call('filemtime', func_get_args());
     }
@@ -819,7 +819,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function microtime(bool $get_as_float = false): MethodProphecy
+    public function microtime($get_as_float = false): MethodProphecy
     {
         return $this->__call('microtime', func_get_args());
     }
@@ -1093,7 +1093,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function date(string $format, int $timestamp = null): MethodProphecy
+    public function date($format, $timestamp = null): MethodProphecy
     {
         return $this->__call('date', func_get_args());
     }
@@ -1120,7 +1120,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function uniqid(string $prefix = '', bool $more_entropy = null): MethodProphecy
+    public function uniqid($prefix = '', $more_entropy = null): MethodProphecy
     {
         return $this->__call('uniqid', func_get_args());
     }
@@ -1139,7 +1139,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function is_dir(string $filename): MethodProphecy
+    public function is_dir($filename): MethodProphecy
     {
         return $this->__call('is_dir', func_get_args());
     }
@@ -1493,7 +1493,7 @@ trait PHPBuiltInFunctions
      * @since 4.0
      * @since 5.0
      */
-    public function mail($to, $subject, $message, string $additional_headers = null, $additional_parameters = null): MethodProphecy
+    public function mail($to, $subject, $message, $additional_headers = null, $additional_parameters = null): MethodProphecy
     {
         return $this->__call('mail', func_get_args());
     }

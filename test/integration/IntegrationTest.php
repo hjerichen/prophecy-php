@@ -1,9 +1,12 @@
 <?php
 
-namespace HJerichen\ProphecyPHP;
+namespace HJerichen\ProphecyPHP\Integration;
 
+use HJerichen\ProphecyPHP\NamespaceProphecy;
+use HJerichen\ProphecyPHP\PHPProphetTrait;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use Prophecy\Exception\Prediction\PredictionException;
 use ReflectionException;
 use ReflectionProperty;
@@ -96,12 +99,23 @@ class IntegrationTest extends TestCase
     /**
      *
      */
+    public function testFunctionWillReturnSimpleWithProphecyArgument(): void
+    {
+        $this->php->date(Argument::any())->willReturn('16.07.2019 21:43:00');
+        $this->php->reveal();
+
+        $this->assertEquals('16.07.2019 21:43:00', date('d.m.Y H:i:s'));
+    }
+
+    /**
+     *
+     */
     public function testFunctionWillReturnSimpleWithWrongParameter(): void
     {
         $this->php->date('d.m.Y H:i:s')->willReturn('16.07.2019 21:43:00');
         $this->php->reveal();
 
-        $this->expectExceptionObject(new InvalidArgumentException("No php function prophecy set for date in HJerichen\ProphecyPHP with passed parameters."));
+        $this->expectExceptionObject(new InvalidArgumentException("No php function prophecy set for date in HJerichen\ProphecyPHP\Integration with passed parameters."));
 
         date('d.m.Y H:i');
     }
@@ -125,7 +139,7 @@ class IntegrationTest extends TestCase
         $this->php->date('d.m.Y H:i:s', 1000)->willReturn('16.07.2019 21:43:00');
         $this->php->reveal();
 
-        $this->expectExceptionObject(new InvalidArgumentException("No php function prophecy set for date in HJerichen\ProphecyPHP with passed parameters."));
+        $this->expectExceptionObject(new InvalidArgumentException("No php function prophecy set for date in HJerichen\ProphecyPHP\Integration with passed parameters."));
 
         date('d.m.Y H:i:s');
     }
