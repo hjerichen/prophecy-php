@@ -11,7 +11,7 @@ use Text_Template;
 /**
  * Class PHPProphetTest
  * @package HJerichen\ProphecyPHP
- * @author Heiko Jerichen <h.jerichen@nordwest.com>
+ * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class PHPProphetTest extends TestCase
 {

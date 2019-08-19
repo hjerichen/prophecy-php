@@ -12,7 +12,7 @@ use Prophecy\Prophet;
 /**
  * Class NamespaceProphecyTest
  * @package HJerichen\ProphecyPHP
- * @author Heiko Jerichen <h.jerichen@nordwest.com>
+ * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class NamespaceProphecyTest extends TestCase
 {

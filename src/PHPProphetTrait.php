@@ -14,7 +14,7 @@ use ReflectionMethod;
 /**
  * Trait PHPProphetTrait
  * @package HJerichen\ProphecyPHP
- * @author Heiko Jerichen <h.jerichen@nordwest.com>
+ * @author Heiko Jerichen <heiko@jerichen.de>
  */
 trait PHPProphetTrait
 {

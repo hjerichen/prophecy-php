@@ -9,7 +9,7 @@ use InvalidArgumentException;
 /**
  * Class FunctionProphecyStorage
  * @package HJerichen\ProphecyPHP
- * @author Heiko Jerichen <h.jerichen@nordwest.com>
+ * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class FunctionProphecyStorage
 {

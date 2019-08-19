@@ -11,7 +11,7 @@ use Prophecy\Prophecy\MethodProphecy;
 /**
  * Class PHPBuiltInFunctions
  * @package HJerichen\ProphecyPHP
- * @author Heiko Jerichen <h.jerichen@nordwest.com>
+ * @author Heiko Jerichen <heiko@jerichen.de>
  */
 trait PHPBuiltInFunctions
 {
