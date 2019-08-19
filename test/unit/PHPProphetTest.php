@@ -44,10 +44,11 @@ class PHPProphetTest extends TestCase
      */
     public function testProphesize(): void
     {
-        $functionProphecyStorage = FunctionProphecyStorage::getInstance();
         $textTemplate = new Text_Template(__DIR__ . '/../../src/function.tpl');
+        $functionProphecyStorage = FunctionProphecyStorage::getInstance();
+        $functionRevealer = new FunctionRevealer($textTemplate);
 
-        $expected = new NamespaceProphecy($this->prophet, 'namespace', $functionProphecyStorage, $textTemplate);
+        $expected = new NamespaceProphecy($this->prophet, 'namespace', $functionProphecyStorage, $functionRevealer);
         $actual = $this->phpProphet->prophesize('namespace');
         $this->assertEquals($expected, $actual);
     }

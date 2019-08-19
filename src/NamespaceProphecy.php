@@ -7,7 +7,6 @@ namespace HJerichen\ProphecyPHP;
 use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Prophecy\ProphecyInterface;
 use Prophecy\Prophet;
-use Text_Template;
 
 /**
  * Class NamespaceProphecy
@@ -31,9 +30,9 @@ class NamespaceProphecy implements ProphecyInterface
      */
     private $functionProphecyStorage;
     /**
-     * @var Text_Template
+     * @var FunctionRevealer
      */
-    private $textTemplate;
+    private $functionRevealer;
 
 
     /**
@@ -41,14 +40,14 @@ class NamespaceProphecy implements ProphecyInterface
      * @param Prophet $prophet
      * @param string $namespace
      * @param FunctionProphecyStorage $functionProphecyStorage
-     * @param Text_Template $textTemplate
+     * @param FunctionRevealer $functionRevealer
      */
-    public function __construct(Prophet $prophet, string $namespace, FunctionProphecyStorage $functionProphecyStorage, Text_Template $textTemplate)
+    public function __construct(Prophet $prophet, string $namespace, FunctionProphecyStorage $functionProphecyStorage, FunctionRevealer $functionRevealer)
     {
         $this->prophet = $prophet;
         $this->namespace = $namespace;
         $this->functionProphecyStorage = $functionProphecyStorage;
-        $this->textTemplate = $textTemplate;
+        $this->functionRevealer = $functionRevealer;
     }
 
     /**
@@ -68,41 +67,23 @@ class NamespaceProphecy implements ProphecyInterface
     }
 
     /**
+     * @param string ...$functionNames
+     */
+    public function prepare(string ...$functionNames): void
+    {
+        foreach ($functionNames as $functionName) {
+            $this->functionRevealer->revealFunction($this->namespace, $functionName);
+        }
+    }
+
+    /**
      * Reveals prophecy object (double) .
      */
     public function reveal(): void
     {
         foreach ($this->functionProphecyStorage->getFunctionNamesOfSetProphecies($this->namespace) as $functionName) {
-            $this->revealFunction($functionName);
+            $this->functionRevealer->revealFunction($this->namespace, $functionName);
         }
-    }
-
-    /**
-     * @param string $functionName
-     */
-    private function revealFunction(string $functionName): void
-    {
-        if ($this->isFunctionAlreadyRevealed($functionName)) {
-            return;
-        }
-
-        $data = [
-            'namespace' => $this->namespace,
-            'functionName' => $functionName
-        ];
-        $this->textTemplate->setVar($data, false);
-        $renderedTemplate = $this->textTemplate->render();
-
-        eval($renderedTemplate);
-    }
-
-    /**
-     * @param string $functionName
-     * @return bool
-     */
-    private function isFunctionAlreadyRevealed(string $functionName): bool
-    {
-        return function_exists("{$this->namespace}\\{$functionName}");
     }
 
     /**

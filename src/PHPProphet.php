@@ -39,10 +39,11 @@ class PHPProphet
      */
     public function prophesize(string $namespace): NamespaceProphecy
     {
-        $functionProphecyStorage = FunctionProphecyStorage::getInstance();
         $textTemplate = new Text_Template(__DIR__ . '/function.tpl');
+        $functionProphecyStorage = FunctionProphecyStorage::getInstance();
+        $functionRevealer = new FunctionRevealer($textTemplate);
 
-        $this->namespaceProphecies[$namespace] = new NamespaceProphecy($this->prophet, $namespace, $functionProphecyStorage, $textTemplate);
+        $this->namespaceProphecies[$namespace] = new NamespaceProphecy($this->prophet, $namespace, $functionProphecyStorage, $functionRevealer);
         return $this->namespaceProphecies[$namespace];
     }
 

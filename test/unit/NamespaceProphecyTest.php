@@ -2,14 +2,12 @@
 
 namespace HJerichen\ProphecyPHP;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Prophecy\ObjectProphecy;
 use Prophecy\Prophecy\ProphecyInterface;
 use Prophecy\Prophet;
-use Text_Template;
 
 /**
  * Class NamespaceProphecyTest
@@ -35,9 +33,9 @@ class NamespaceProphecyTest extends TestCase
      */
     private $functionProphecyStorage;
     /**
-     * @var Text_Template | ObjectProphecy
+     * @var FunctionRevealer | ObjectProphecy
      */
-    private $textTemplate;
+    private $functionRevealer;
     /**
      * @var ObjectProphecy | MockObject
      */
@@ -67,12 +65,10 @@ class NamespaceProphecyTest extends TestCase
         $this->prophet->method('prophesize')->with(FunctionDelegation::class)->willReturn($this->objectProphecy);
 
         $this->functionProphecyStorage = $this->prophesize(FunctionProphecyStorage::class);
-        $this->textTemplate = $this->prophesize(Text_Template::class);
+        $this->functionRevealer = $this->prophesize(FunctionRevealer::class);
         $this->namespace = 'namespace';
 
-        $GLOBALS['NamespaceProphecyTest::FunctionExists::Active'] = true;
-
-        $this->namespaceProphecy = new NamespaceProphecy($this->prophet, $this->namespace, $this->functionProphecyStorage->reveal(), $this->textTemplate->reveal());
+        $this->namespaceProphecy = new NamespaceProphecy($this->prophet, $this->namespace, $this->functionProphecyStorage->reveal(), $this->functionRevealer->reveal());
     }
 
     /**
@@ -85,14 +81,6 @@ class NamespaceProphecyTest extends TestCase
 
         $this->functionProphecyStorage->add($expectedFunctionProphecy)->shouldBeCalledOnce();
         $this->objectProphecy->method('__call')->with('delegate', [$functionName, $arguments])->willReturn($this->methodProphecy->reveal());
-    }
-
-    /**
-     * 
-     */
-    protected function tearDown(): void
-    {
-        $GLOBALS['NamespaceProphecyTest::FunctionExists::Active'] = false;
     }
 
 
@@ -155,45 +143,26 @@ class NamespaceProphecyTest extends TestCase
     /**
      *
      */
-    public function testReveal(): void
+    public function testPrepare(): void
     {
-        $functionNames = ['time', 'date'];
-        $this->functionProphecyStorage->getFunctionNamesOfSetProphecies($this->namespace)->willReturn($functionNames);
+        $this->functionRevealer->revealFunction($this->namespace, 'time')->shouldBeCalledOnce();
+        $this->functionRevealer->revealFunction($this->namespace, 'date')->shouldBeCalledOnce();
 
-        $expectedTemplateData1 = [
-            'namespace' => $this->namespace,
-            'functionName' => 'time'
-        ];
-        $expectedTemplateData2 = [
-            'namespace' => $this->namespace,
-            'functionName' => 'date'
-        ];
-        $this->textTemplate->setVar($expectedTemplateData1, false)->shouldBeCalledOnce();
-        $this->textTemplate->setVar($expectedTemplateData2, false)->shouldBeCalledOnce();
-        $this->textTemplate->render()->willReturn('$_SESSION["test1"] = 1;', '$_SESSION["test2"] = 2;');
-
-        $this->namespaceProphecy->reveal();
-        $this->assertEquals(1, $_SESSION['test1']);
-        $this->assertEquals(2, $_SESSION['test2']);
+        $this->namespaceProphecy->prepare('time', 'date');
     }
 
     /**
      *
      */
-    public function testRevealWithFunctionAlreadyRevealed(): void
+    public function testReveal(): void
     {
-        $functionNames = ['time', 'count'];
+        $functionNames = ['time', 'date'];
         $this->functionProphecyStorage->getFunctionNamesOfSetProphecies($this->namespace)->willReturn($functionNames);
 
-        $expectedTemplateData1 = [
-            'namespace' => $this->namespace,
-            'functionName' => 'time'
-        ];
-        $this->textTemplate->setVar($expectedTemplateData1, false)->shouldBeCalledOnce();
-        $this->textTemplate->render()->willReturn('$_SESSION["test3"] = 3;');
+        $this->functionRevealer->revealFunction($this->namespace, 'time')->shouldBeCalledOnce();
+        $this->functionRevealer->revealFunction($this->namespace, 'date')->shouldBeCalledOnce();
 
         $this->namespaceProphecy->reveal();
-        $this->assertEquals(3, $_SESSION['test3']);
     }
 
     /**
@@ -209,27 +178,3 @@ class NamespaceProphecyTest extends TestCase
 
     /* HELPERS */
 }
-
-
-/**q
- * Mock for function "function_exists"
- * @param string $functionName
- * @return bool
- */
-function function_exists(string $functionName): bool
-{
-    if ($GLOBALS['NamespaceProphecyTest::FunctionExists::Active'] === false) {
-        return \function_exists($functionName);
-    }
-    
-    switch ($functionName) {
-        case 'namespace\time':
-        case 'namespace\date':
-            return false;
-        case 'namespace\count':
-            return true;
-    }
-
-    throw new InvalidArgumentException("FunctionName \"{$functionName}\" not supported in \"function_exists\".");
-}
-$GLOBALS['NamespaceProphecyTest::FunctionExists::Active'] = false;

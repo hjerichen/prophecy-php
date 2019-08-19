@@ -71,6 +71,15 @@ $this->php->reveal(); //Only with this call the above functions will be mocked.
 
 Only *unqualified* function calls in a namespace context can be mocked.
 
+## Known Issues
+
+Because auf the PHP Bug [64346](https://bugs.php.net/bug.php?id=64346) mocking may not work. This is because of calling the original function in the namesapce before mocking it.
+In this case, you could try to use "prepare" in the "setUp" method:
+```php
+<?php
+
+$this->php->prepare('time', 'date'); //If you have problems with the time and date functions.
+```
 
 ## License and authors
 
