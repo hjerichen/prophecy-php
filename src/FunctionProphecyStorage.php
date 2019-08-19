@@ -4,7 +4,8 @@
 namespace HJerichen\ProphecyPHP;
 
 
-use InvalidArgumentException;
+use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
+use Prophecy\Util\StringUtil;
 
 /**
  * Class FunctionProphecyStorage
@@ -69,7 +70,8 @@ class FunctionProphecyStorage
                 return $functionProphecy;
             }
         }
-        throw new InvalidArgumentException("No php function prophecy set for {$functionName} in {$namespace} with passed parameters.");
+        $unexpectedArguments = (new StringUtil())->stringify($arguments);
+        throw new FunctionProphecyNotFoundException("Unexpected call of \"{$functionName}\" in namespace \"{$namespace}\" with passed arguments:\n{$unexpectedArguments}");
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace HJerichen\ProphecyPHP;
 
+use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -107,7 +108,7 @@ class FunctionCallDetectorTest extends TestCase
         $namespace = 'something';
         $functionName = 'time';
         $arguments = [];
-        $exception = $this->prophesize(InvalidArgumentException::class)->reveal();
+        $exception = $this->prophesize(FunctionProphecyNotFoundException::class)->reveal();
 
         $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments)->willThrow($exception);
         $this->functionProphecyStorage->hasFunctionPropheciesForFunctionName($namespace, $functionName)->willReturn(false);

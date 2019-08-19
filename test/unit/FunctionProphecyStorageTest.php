@@ -2,7 +2,7 @@
 
 namespace HJerichen\ProphecyPHP;
 
-use InvalidArgumentException;
+use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -136,12 +136,13 @@ class FunctionProphecyStorageTest extends TestCase
     {
         $namespace = 'namespace';
         $functionName = 'time';
-        $arguments = ['test'];
+        $arguments = [1000, 'test'];
 
         $this->functionProphecyStorage->add($this->createFunctionProphecy($namespace, 'count', $arguments));
         $this->functionProphecyStorage->add($this->createFunctionProphecy('namespace2', 'file_get_contents', $arguments));
 
-        $this->expectExceptionObject(new InvalidArgumentException('No php function prophecy set for time in namespace with passed parameters.'));
+        $this->expectException(FunctionProphecyNotFoundException::class);
+        $this->expectExceptionMessage("Unexpected call of \"time\" in namespace \"namespace\" with passed arguments:\n[1000, \"test\"]");
 
         $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments);
     }

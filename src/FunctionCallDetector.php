@@ -4,7 +4,7 @@
 namespace HJerichen\ProphecyPHP;
 
 
-use InvalidArgumentException;
+use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
 
 /**
  * Class FunctionCaller
@@ -53,7 +53,7 @@ class FunctionCallDetector
         try {
             $functionProphecy = $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments);
             return $functionProphecy->makeCall();
-        } catch (InvalidArgumentException $exception) {
+        } catch (FunctionProphecyNotFoundException $exception) {
             if ($this->functionProphecyStorage->hasFunctionPropheciesForFunctionName($namespace, $functionName)) {
                 throw $exception;
             }

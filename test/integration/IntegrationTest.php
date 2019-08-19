@@ -2,9 +2,9 @@
 
 namespace HJerichen\ProphecyPHP\Integration;
 
+use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
 use HJerichen\ProphecyPHP\NamespaceProphecy;
 use HJerichen\ProphecyPHP\PHPProphetTrait;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\Exception\Prediction\PredictionException;
@@ -115,7 +115,7 @@ class IntegrationTest extends TestCase
         $this->php->date('d.m.Y H:i:s')->willReturn('16.07.2019 21:43:00');
         $this->php->reveal();
 
-        $this->expectExceptionObject(new InvalidArgumentException("No php function prophecy set for date in HJerichen\ProphecyPHP\Integration with passed parameters."));
+        $this->expectException(FunctionProphecyNotFoundException::class);
 
         date('d.m.Y H:i');
     }
@@ -139,7 +139,7 @@ class IntegrationTest extends TestCase
         $this->php->date('d.m.Y H:i:s', 1000)->willReturn('16.07.2019 21:43:00');
         $this->php->reveal();
 
-        $this->expectExceptionObject(new InvalidArgumentException("No php function prophecy set for date in HJerichen\ProphecyPHP\Integration with passed parameters."));
+        $this->expectException(FunctionProphecyNotFoundException::class);
 
         date('d.m.Y H:i:s');
     }
