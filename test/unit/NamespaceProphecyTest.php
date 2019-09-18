@@ -77,7 +77,7 @@ class NamespaceProphecyTest extends TestCase
      */
     private function setUpCallTest(string $functionName, array $arguments): void
     {
-        $expectedFunctionProphecy = new FunctionProphecy($this->functionDelegation->reveal(), $this->namespace, $functionName, $arguments);
+        $expectedFunctionProphecy = new FunctionProphecy($this->functionDelegation->reveal(), new ArgumentEvaluator($arguments), $this->namespace, $functionName, $arguments);
 
         $this->functionProphecyStorage->add($expectedFunctionProphecy)->shouldBeCalledOnce();
         $this->objectProphecy->method('__call')->with('delegate', [$functionName, $arguments])->willReturn($this->methodProphecy->reveal());

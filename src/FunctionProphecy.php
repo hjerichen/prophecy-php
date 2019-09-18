@@ -4,8 +4,6 @@
 namespace HJerichen\ProphecyPHP;
 
 
-use Prophecy\Argument\ArgumentsWildcard;
-
 /**
  * Class FunctionProphecy
  * @package HJerichen\ProphecyPHP
@@ -17,6 +15,10 @@ class FunctionProphecy
      * @var FunctionDelegation
      */
     private $functionDelegation;
+    /**
+     * @var ArgumentEvaluator
+     */
+    private $argumentEvaluator;
     /**
      * @var string
      */
@@ -33,16 +35,18 @@ class FunctionProphecy
     /**
      * FunctionProphecy constructor.
      * @param FunctionDelegation $functionDelegation
+     * @param ArgumentEvaluator $argumentEvaluator
      * @param string $namespace
      * @param string $functionName
      * @param array $arguments
      */
-    public function __construct(FunctionDelegation $functionDelegation, string $namespace, string $functionName, array $arguments)
+    public function __construct(FunctionDelegation $functionDelegation, ArgumentEvaluator $argumentEvaluator, string $namespace, string $functionName, array $arguments)
     {
+        $this->functionDelegation = $functionDelegation;
+        $this->argumentEvaluator = $argumentEvaluator;
         $this->namespace = $namespace;
         $this->functionName = $functionName;
         $this->arguments = $arguments;
-        $this->functionDelegation = $functionDelegation;
     }
 
     /**
@@ -70,13 +74,12 @@ class FunctionProphecy
     }
 
     /**
-     * @param mixed[] $arguments
-     * @return bool
+     * @param array $arguments
+     * @return int
      */
-    public function isForArguments(array $arguments): bool
+    public function scoreArguments(array $arguments): int
     {
-        $wildcard = new ArgumentsWildcard($this->arguments);
-        return $wildcard->scoreArguments($arguments) > 0;
+        return $this->argumentEvaluator->scoreArguments($arguments);
     }
 
     /**

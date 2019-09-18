@@ -65,13 +65,40 @@ class FunctionProphecyStorage
      */
     public function getFunctionProphecy(string $namespace, string $functionName, array $arguments): FunctionProphecy
     {
-        foreach ($this->getFunctionPropheciesForFunctionName($namespace, $functionName) as $functionProphecy) {
-            if ($functionProphecy->isForArguments($arguments)) {
-                return $functionProphecy;
+        $functionProphecy = $this->getFunctionProphecyWithHighestScore($namespace, $functionName, $arguments);
+
+        if ($functionProphecy === null) {
+            $unexpectedArguments = (new StringUtil())->stringify($arguments);
+            throw new FunctionProphecyNotFoundException("Unexpected call of \"{$functionName}\" in namespace \"{$namespace}\" with passed arguments:\n{$unexpectedArguments}");
+        }
+
+        return $functionProphecy;
+    }
+
+    /**
+     * @param string $namespace
+     * @param string $functionName
+     * @param array $arguments
+     * @return FunctionProphecy|null
+     */
+    private function getFunctionProphecyWithHighestScore(string $namespace, string $functionName, array $arguments): ?FunctionProphecy
+    {
+        $functionProphecies = $this->getFunctionPropheciesForFunctionName($namespace, $functionName);
+        if (count($functionProphecies) === 0) {
+            return null;
+        }
+
+        $functionProphecyWithHighestScore = array_shift($functionProphecies);
+        foreach ($functionProphecies as $functionProphecy) {
+            if ($functionProphecy->scoreArguments($arguments) > $functionProphecyWithHighestScore->scoreArguments($arguments)) {
+                $functionProphecyWithHighestScore = $functionProphecy;
             }
         }
-        $unexpectedArguments = (new StringUtil())->stringify($arguments);
-        throw new FunctionProphecyNotFoundException("Unexpected call of \"{$functionName}\" in namespace \"{$namespace}\" with passed arguments:\n{$unexpectedArguments}");
+
+        if ($functionProphecyWithHighestScore->scoreArguments($arguments) <= 0) {
+            return null;
+        }
+        return $functionProphecyWithHighestScore;
     }
 
     /**

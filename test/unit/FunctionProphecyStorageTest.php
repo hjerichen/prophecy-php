@@ -119,7 +119,7 @@ class FunctionProphecyStorageTest extends TestCase
         $arguments = ['test'];
         $functionProphecy = $this->createFunctionProphecy($namespace, $functionName, $arguments);
 
-        $this->functionProphecyStorage->add($this->createFunctionProphecy($namespace, $functionName, $arguments, false));
+        $this->functionProphecyStorage->add($this->createFunctionProphecy($namespace, $functionName, $arguments, 0));
         $this->functionProphecyStorage->add($functionProphecy);
         $this->functionProphecyStorage->add($this->createFunctionProphecy($namespace, 'count', $arguments));
         $this->functionProphecyStorage->add($this->createFunctionProphecy('namespace2', 'file_get_contents', $arguments));
@@ -144,6 +144,44 @@ class FunctionProphecyStorageTest extends TestCase
         $this->expectException(FunctionProphecyNotFoundException::class);
         $this->expectExceptionMessage("Unexpected call of \"time\" in namespace \"namespace\" with passed arguments:\n[1000, \"test\"]");
 
+        $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments);
+    }
+
+    /**
+     *
+     */
+    public function testGetFunctionProphecyWithScoreCompare(): void
+    {
+        $namespace = 'namespace';
+        $functionName = 'time';
+        $arguments = ['test'];
+        $functionProphecy1 = $this->createFunctionProphecy($namespace, $functionName, $arguments, 4);
+        $functionProphecy2 = $this->createFunctionProphecy($namespace, $functionName, $arguments, 8);
+        $functionProphecy3 = $this->createFunctionProphecy($namespace, $functionName, $arguments, 0);
+
+        $this->functionProphecyStorage->add($functionProphecy1);
+        $this->functionProphecyStorage->add($functionProphecy2);
+        $this->functionProphecyStorage->add($functionProphecy3);
+
+        $expected = $functionProphecy2;
+        $actual = $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments);
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     *
+     */
+    public function testGetFunctionProphecyWithScoreZero(): void
+    {
+        $namespace = 'namespace';
+        $functionName = 'time';
+        $arguments = ['test'];
+        $functionProphecy = $this->createFunctionProphecy($namespace, $functionName, $arguments, 0);
+
+        $this->functionProphecyStorage->add($functionProphecy);
+
+        $this->expectException(FunctionProphecyNotFoundException::class);
+        
         $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments);
     }
 
@@ -225,18 +263,18 @@ class FunctionProphecyStorageTest extends TestCase
      * @param string $namespace
      * @param string $functionName
      * @param array $arguments
-     * @param bool $isForArguments
+     * @param int $score
      * @return FunctionProphecy
      */
-    private function createFunctionProphecy(string $namespace, string $functionName, array $arguments = [], bool $isForArguments = true): FunctionProphecy
+    private function createFunctionProphecy(string $namespace, string $functionName, array $arguments = [], int $score = 10): FunctionProphecy
     {
-        $identification = md5("{$namespace}::{$functionName}::" . serialize($arguments));
+        $identification = md5("{$namespace}::{$functionName}::{$score}");
 
         $functionProphecy = $this->prophesize(FunctionProphecy::class);
         $functionProphecy->getIdentification()->willReturn($identification);
         $functionProphecy->getNamespace()->willReturn($namespace);
         $functionProphecy->getFunctionName()->willReturn($functionName);
-        $functionProphecy->isForArguments($arguments)->willReturn($isForArguments);
+        $functionProphecy->scoreArguments($arguments)->willReturn($score);
         return $functionProphecy->reveal();
     }
 }

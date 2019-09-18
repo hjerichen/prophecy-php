@@ -60,7 +60,7 @@ class NamespaceProphecy implements ProphecyInterface
         $prophecy = $this->prophet->prophesize(FunctionDelegation::class);
 
         /** @noinspection PhpParamsInspection */
-        $functionProphecy = new FunctionProphecy($prophecy->reveal(), $this->namespace, $functionName, $arguments);
+        $functionProphecy = new FunctionProphecy($prophecy->reveal(), new ArgumentEvaluator($arguments), $this->namespace, $functionName, $arguments);
         $this->functionProphecyStorage->add($functionProphecy);
 
         return $prophecy->__call('delegate', [$functionName, $arguments]);

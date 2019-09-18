@@ -175,13 +175,26 @@ class IntegrationTest extends TestCase
     /**
      *
      */
-    public function testOverwrite(): void
+    public function testOverwriteProphecy(): void
     {
         $this->php->time()->willReturn(2);
         $this->php->time()->willReturn(4);
         $this->php->reveal();
 
         $this->assertEquals(4, time());
+    }
+
+    /**
+     *
+     */
+    public function testCalculateCorrectProphecy(): void
+    {
+        $this->php->date(Argument::any())->willReturn('2020');
+        $this->php->date('Y')->willReturn('2019');
+        $this->php->reveal();
+
+        $this->assertEquals('2020', date('m'));
+        $this->assertEquals('2019', date('Y'));
     }
 
 

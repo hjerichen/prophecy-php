@@ -3,8 +3,6 @@
 namespace HJerichen\ProphecyPHP;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Util\TestDox\NamePrettifier;
-use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 
 /**
@@ -22,6 +20,10 @@ class FunctionProphecyTest extends TestCase
      * @var FunctionDelegation | ObjectProphecy
      */
     private $functionDelegation;
+    /**
+     * @var ArgumentEvaluator | ObjectProphecy
+     */
+    private $argumentEvaluator;
     /**
      * @var string
      */
@@ -43,8 +45,10 @@ class FunctionProphecyTest extends TestCase
         parent::setUp();
 
         $this->functionDelegation = $this->prophesize(FunctionDelegation::class);
+        $this->argumentEvaluator = $this->prophesize(ArgumentEvaluator::class);
 
-        $this->functionProphecy = new FunctionProphecy($this->functionDelegation->reveal(), $this->namespace, $this->functionName, $this->arguments);
+        $this->functionProphecy = new FunctionProphecy($this->functionDelegation->reveal(), $this->argumentEvaluator->reveal(), $this->namespace, $this->functionName,
+            $this->arguments);
     }
 
     /**
@@ -80,100 +84,28 @@ class FunctionProphecyTest extends TestCase
     /**
      *
      */
-    public function testIsForArgumentsSimpleTrue(): void
+    public function testScoreArguments(): void
     {
-        $expected = true;
-        $actual = $this->functionProphecy->isForArguments($this->arguments);
+        $arguments = [false];
+
+        $this->argumentEvaluator->scoreArguments($arguments)->willReturn(10);
+
+        $expected = 10;
+        $actual = $this->functionProphecy->scoreArguments($arguments);
         $this->assertEquals($expected, $actual);
     }
 
     /**
      *
      */
-    public function testIsForArgumentsSimpleFalse(): void
+    public function testScoreArgumentsWithFalse(): void
     {
-        $expected = false;
-        $actual = $this->functionProphecy->isForArguments([]);
-        $this->assertEquals($expected, $actual);
-    }
+        $arguments = [];
 
-    /**
-     *
-     */
-    public function testIsForArgumentsForEqualObject(): void
-    {
-        $arguments1 = [
-            new NamePrettifier(true)
-        ];
-        $arguments2 = [
-            new NamePrettifier(true)
-        ];
+        $this->argumentEvaluator->scoreArguments($arguments)->willReturn(false);
 
-        $this->functionProphecy = new FunctionProphecy($this->functionDelegation->reveal(), $this->namespace,
-            $this->functionName, $arguments1);
-
-        $expected = true;
-        $actual = $this->functionProphecy->isForArguments($arguments2);
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     *
-     */
-    public function testIsForArgumentsForEqualObjectButSameNeeded(): void
-    {
-        $arguments1 = [
-            Argument::is(new NamePrettifier(true))
-        ];
-        $arguments2 = [
-            new NamePrettifier(true)
-        ];
-
-        $this->functionProphecy = new FunctionProphecy($this->functionDelegation->reveal(), $this->namespace,
-            $this->functionName, $arguments1);
-
-        $expected = false;
-        $actual = $this->functionProphecy->isForArguments($arguments2);
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     *
-     */
-    public function testIsForArgumentsForSameObjectAndSameNeeded(): void
-    {
-        $object = new NamePrettifier(true);
-        $arguments1 = [
-            Argument::is($object)
-        ];
-        $arguments2 = [
-            $object
-        ];
-
-        $this->functionProphecy = new FunctionProphecy($this->functionDelegation->reveal(), $this->namespace,
-            $this->functionName, $arguments1);
-
-        $expected = true;
-        $actual = $this->functionProphecy->isForArguments($arguments2);
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     *
-     */
-    public function testIsForArgumentsForNotEqualObject(): void
-    {
-        $arguments1 = [
-            new NamePrettifier(true)
-        ];
-        $arguments2 = [
-            new NamePrettifier(false)
-        ];
-
-        $this->functionProphecy = new FunctionProphecy($this->functionDelegation->reveal(), $this->namespace, $this->functionName, $arguments1);
-
-        $expected = false;
-        $actual = $this->functionProphecy->isForArguments($arguments2);
+        $expected = 0;
+        $actual = $this->functionProphecy->scoreArguments($arguments);
         $this->assertEquals($expected, $actual);
     }
 
