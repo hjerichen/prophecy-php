@@ -4,7 +4,7 @@ Mock build-in PHP functions for PHPUnit in Prophecy Style.
 ## Installation
 Use [Composer](https://getcomposer.org/):
 ```sh
-composer require hjerichen/prophecy-php
+composer require --dev hjerichen/prophecy-php
 ```
 
 ## Usage
