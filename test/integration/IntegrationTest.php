@@ -172,6 +172,18 @@ class IntegrationTest extends TestCase
         $this->phpProphet->checkPredictions();
     }
 
+    /**
+     *
+     */
+    public function testOverwrite(): void
+    {
+        $this->php->time()->willReturn(2);
+        $this->php->time()->willReturn(4);
+        $this->php->reveal();
+
+        $this->assertEquals(4, time());
+    }
+
 
     /* HELPER */
 

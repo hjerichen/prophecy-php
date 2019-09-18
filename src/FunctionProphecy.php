@@ -48,6 +48,14 @@ class FunctionProphecy
     /**
      * @return string
      */
+    public function getIdentification(): string
+    {
+        return md5("{$this->namespace}::{$this->functionName}::" . serialize($this->arguments));
+    }
+
+    /**
+     * @return string
+     */
     public function getNamespace(): string
     {
         return $this->namespace;

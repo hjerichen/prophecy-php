@@ -42,7 +42,7 @@ class FunctionProphecyStorage
     {
         $namespace = $functionProphecy->getNamespace();
         $functionName = $functionProphecy->getFunctionName();
-        $this->functionProphecies[$namespace][$functionName][] = $functionProphecy;
+        $this->functionProphecies[$namespace][$functionName][$functionProphecy->getIdentification()] = $functionProphecy;
     }
 
     /**

@@ -50,6 +50,16 @@ class FunctionProphecyTest extends TestCase
     /**
      *
      */
+    public function testGetIdentification(): void
+    {
+        $expected = 'aaf13e822dd18dbb1dd9d3bca35c71b5';
+        $actual = $this->functionProphecy->getIdentification();
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     *
+     */
     public function testGetNamespace(): void
     {
         $expected = $this->namespace;

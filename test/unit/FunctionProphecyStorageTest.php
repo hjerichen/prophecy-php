@@ -150,6 +150,25 @@ class FunctionProphecyStorageTest extends TestCase
     /**
      *
      */
+    public function testAddForAlreadyExitingFunctionProphecy(): void
+    {
+        $namespace = 'namespace';
+        $functionName = 'time';
+        $arguments = [1000, 'test'];
+
+        $functionProphecy1 = $this->createFunctionProphecy($namespace, $functionName, $arguments);
+        $functionProphecy2 = $this->createFunctionProphecy($namespace, $functionName, $arguments);
+        $this->functionProphecyStorage->add($functionProphecy1);
+        $this->functionProphecyStorage->add($functionProphecy2);
+
+        $expected = $functionProphecy2;
+        $actual = $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments);
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     *
+     */
     public function testRemoveFunctionPropheciesForNamespace(): void
     {
         $this->functionProphecyStorage->add($this->createFunctionProphecy('namespace1', 'time'));
@@ -211,7 +230,10 @@ class FunctionProphecyStorageTest extends TestCase
      */
     private function createFunctionProphecy(string $namespace, string $functionName, array $arguments = [], bool $isForArguments = true): FunctionProphecy
     {
+        $identification = md5("{$namespace}::{$functionName}::" . serialize($arguments));
+
         $functionProphecy = $this->prophesize(FunctionProphecy::class);
+        $functionProphecy->getIdentification()->willReturn($identification);
         $functionProphecy->getNamespace()->willReturn($namespace);
         $functionProphecy->getFunctionName()->willReturn($functionName);
         $functionProphecy->isForArguments($arguments)->willReturn($isForArguments);
