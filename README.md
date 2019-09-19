@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/hjerichen/prophecy-php.svg?branch=master)](https://travis-ci.org/hjerichen/prophecy-php)
+
 # Prophecy-PHP
 Mock build-in PHP functions for PHPUnit in Prophecy Style.
 
