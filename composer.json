@@ -2,6 +2,7 @@
     "name": "hjerichen/prophecy-php",
     "description": "Prophesize PHP Functions.",
     "type": "testing",
+    "license": "MIT",
     "authors": [
         {
             "name": "Heiko Jerichen",
