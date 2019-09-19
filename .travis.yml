@@ -9,4 +9,4 @@ install:
   - composer install
 
 script:
-  - phpunit
+  - phpunit --configuration test/phpunit-configuration.xml test
