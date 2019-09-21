@@ -24,7 +24,7 @@ class FunctionProphecyNotFoundExceptionTest extends TestCase
     {
         parent::setUp();
 
-        $this->exception = new FunctionProphecyNotFoundException();
+        $this->exception = new FunctionProphecyNotFoundException('something', 'time', [4, 'test']);
     }
 
 
@@ -36,6 +36,16 @@ class FunctionProphecyNotFoundExceptionTest extends TestCase
     public function testClassImplementsCorrectInterface(): void
     {
         $this->assertInstanceOf(RuntimeException::class, $this->exception);
+    }
+
+    /**
+     *
+     */
+    public function testGetMessage(): void
+    {
+        $expected = "Unexpected call of \"time\" in namespace \"something\" with passed arguments:\n[4, \"test\"]";
+        $actual = $this->exception->getMessage();
+        $this->assertEquals($expected, $actual);
     }
 
 

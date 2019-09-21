@@ -5,7 +5,6 @@ namespace HJerichen\ProphecyPHP;
 
 
 use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
-use Prophecy\Util\StringUtil;
 
 /**
  * Class FunctionProphecyStorage
@@ -68,8 +67,7 @@ class FunctionProphecyStorage
         $functionProphecy = $this->getFunctionProphecyWithHighestScore($namespace, $functionName, $arguments);
 
         if ($functionProphecy === null) {
-            $unexpectedArguments = (new StringUtil())->stringify($arguments);
-            throw new FunctionProphecyNotFoundException("Unexpected call of \"{$functionName}\" in namespace \"{$namespace}\" with passed arguments:\n{$unexpectedArguments}");
+            throw new FunctionProphecyNotFoundException($namespace, $functionName, $arguments);
         }
 
         return $functionProphecy;

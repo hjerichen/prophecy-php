@@ -141,8 +141,7 @@ class FunctionProphecyStorageTest extends TestCase
         $this->functionProphecyStorage->add($this->createFunctionProphecy($namespace, 'count', $arguments));
         $this->functionProphecyStorage->add($this->createFunctionProphecy('namespace2', 'file_get_contents', $arguments));
 
-        $this->expectException(FunctionProphecyNotFoundException::class);
-        $this->expectExceptionMessage("Unexpected call of \"time\" in namespace \"namespace\" with passed arguments:\n[1000, \"test\"]");
+        $this->expectExceptionObject(new FunctionProphecyNotFoundException($namespace, $functionName, $arguments));
 
         $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments);
     }

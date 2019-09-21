@@ -1,10 +1,23 @@
 <component name="ProjectDictionaryState">
   <dictionary name="heiko">
     <words>
+      <w>filemtime</w>
+      <w>fopen</w>
+      <w>fwrite</w>
+      <w>getmypid</w>
+      <w>getpid</w>
+      <w>getsid</w>
       <w>jerichen</w>
       <w>microtime</w>
+      <w>pcntl</w>
       <w>prophesize</w>
       <w>revealer</w>
+      <w>scandir</w>
+      <w>setsid</w>
+      <w>strtotime</w>
+      <w>uniqid</w>
+      <w>unserialize</w>
+      <w>usleep</w>
     </words>
   </dictionary>
 </component>

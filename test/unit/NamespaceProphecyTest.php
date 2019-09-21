@@ -86,6 +86,9 @@ class NamespaceProphecyTest extends TestCase
 
     /* TESTS */
 
+    /**
+     *
+     */
     public function testClassImplementsCorrectInterfaces(): void
     {
         $this->assertInstanceOf(ProphecyInterface::class, $this->namespaceProphecy);
@@ -101,42 +104,6 @@ class NamespaceProphecyTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->__call($functionName, $arguments);
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     *
-     */
-    public function testTime(): void
-    {
-        $this->setUpCallTest('time', []);
-
-        $expected = $this->methodProphecy->reveal();
-        $actual = $this->namespaceProphecy->time();
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     *
-     */
-    public function testDateWithTimestamp(): void
-    {
-        $this->setUpCallTest('date', ['Y', 1234]);
-
-        $expected = $this->methodProphecy->reveal();
-        $actual = $this->namespaceProphecy->date('Y', 1234);
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     *
-     */
-    public function testFilePutContents(): void
-    {
-        $this->setUpCallTest('file_put_contents', ['filename', 'content']);
-
-        $expected = $this->methodProphecy->reveal();
-        $actual = $this->namespaceProphecy->file_put_contents('filename', 'content');
         $this->assertEquals($expected, $actual);
     }
 
