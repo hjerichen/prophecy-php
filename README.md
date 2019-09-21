@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/hjerichen/prophecy-php.svg?branch=master)](https://travis-ci.org/hjerichen/prophecy-php)
+[![Coverage Status](https://coveralls.io/repos/github/hjerichen/prophecy-php/badge.svg?branch=master)](https://coveralls.io/github/hjerichen/prophecy-php?branch=master)
 
 # Prophecy-PHP
 Mock build-in PHP functions for PHPUnit in Prophecy Style.
