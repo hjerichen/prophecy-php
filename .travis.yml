@@ -8,4 +8,7 @@ install:
   - composer install
 
 script:
-  - phpunit --configuration test/phpunit-configuration.xml test
+  - phpunit --configuration .phpunit.travis.xml test
+
+after_script:
+  - php vendor/bin/coveralls -v
