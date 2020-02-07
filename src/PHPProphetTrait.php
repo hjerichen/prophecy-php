@@ -1,19 +1,12 @@
 <?php
-/** @noinspection PhpDocMissingThrowsInspection */
-/** @noinspection PhpUnhandledExceptionInspection */
-
 
 namespace HJerichen\ProphecyPHP;
 
-
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophet;
-use ReflectionException;
 use ReflectionMethod;
 
 /**
- * Trait PHPProphetTrait
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 trait PHPProphetTrait
@@ -23,18 +16,11 @@ trait PHPProphetTrait
      */
     private $phpProphet;
 
-    /**
-     * @param string $namespace
-     * @return NamespaceProphecy
-     */
     private function prophesizePHP(string $namespace): NamespaceProphecy
     {
         return $this->getPHPProphet()->prophesize($namespace);
     }
 
-    /**
-     * @return PHPProphet
-     */
     private function getPHPProphet(): PHPProphet
     {
         if ($this->phpProphet === null) {
@@ -43,12 +29,6 @@ trait PHPProphetTrait
         return $this->phpProphet;
     }
 
-
-
-    /**
-     * @return Prophet
-     * @throws ReflectionException
-     */
     private function getProphetFromTestCase(): Prophet
     {
         $refectionMethod = new ReflectionMethod(TestCase::class, 'getProphet');
@@ -57,13 +37,16 @@ trait PHPProphetTrait
     }
 
     /**
-     *
+     * @noinspection PhpUnhandledExceptionInspection
+     * @noinspection PhpUndefinedClassInspection
+     * @noinspection PhpUnused
      */
     public function runBare(): void
     {
-        /** @noinspection PhpUndefinedClassInspection */
-        parent::runBare();
-
-        $this->phpProphet->unReveal();
+        try {
+            parent::runBare();
+        } finally {
+            $this->phpProphet->unReveal();
+        }
     }
 }
