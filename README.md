@@ -25,14 +25,9 @@ class SomeTest extends TestCase
 {
     use PHPProphetTrait;
 
-    /**
-     * @var NamespaceProphecy
-     */
+    /** @var NamespaceProphecy */
     private $php;
 
-    /**
-     *
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -40,15 +35,12 @@ class SomeTest extends TestCase
         $this->php = $this->prophesizePHP(__NAMESPACE__);
     }
 
-    /**
-     *
-     */
     public function testSomething(): void
     {
         $this->php->time()->willReturn(2);
         $this->php->reveal();
 
-        $this->assertEquals(2, time());
+        self::assertEquals(2, time());
     }
 }
 ```
