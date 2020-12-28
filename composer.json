@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^7.3",
+        "php": ">=7.3 | >=8.0",
         "phpspec/prophecy": "^1.8",
         "phpunit/php-text-template": "^2.0"
     },
