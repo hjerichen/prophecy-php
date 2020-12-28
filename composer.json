@@ -10,14 +10,14 @@
         }
     ],
     "require": {
-        "php": "^7.1",
+        "php": "^7.3",
         "phpspec/prophecy": "^1.8",
         "phpunit/php-text-template": "^2.0"
     },
     "autoload": {
         "psr-4": {
             "HJerichen\\ProphecyPHP\\": "./src/",
-            "HJerichen\\ProphecyPHP\\Tests": "./tests/"
+            "HJerichen\\ProphecyPHP\\Tests\\": "./tests/"
         }
     },
     "require-dev": {
