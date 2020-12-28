@@ -1,19 +1,23 @@
 <?php
 
-namespace HJerichen\ProphecyPHP;
+namespace HJerichen\ProphecyPHP\Tests\Unit;
 
 use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
+use HJerichen\ProphecyPHP\FunctionCallDetector;
+use HJerichen\ProphecyPHP\FunctionProphecy;
+use HJerichen\ProphecyPHP\FunctionProphecyStorage;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
 /**
- * Class FunctionCallDetectorTest
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class FunctionCallDetectorTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var FunctionCallDetector
      */
@@ -47,7 +51,7 @@ class FunctionCallDetectorTest extends TestCase
     {
         $expected = FunctionCallDetector::class;
         $actual = FunctionCallDetector::getInstance();
-        $this->assertInstanceOf($expected, $actual);
+        self::assertInstanceOf($expected, $actual);
     }
 
     /**
@@ -58,7 +62,7 @@ class FunctionCallDetectorTest extends TestCase
     {
         $expected = FunctionCallDetector::getInstance();
         $actual = FunctionCallDetector::getInstance();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     /**
@@ -76,7 +80,7 @@ class FunctionCallDetectorTest extends TestCase
 
         $expected = 1234;
         $actual = $this->functionCallDetector->functionCalled($namespace, $functionName, $arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -115,6 +119,6 @@ class FunctionCallDetectorTest extends TestCase
 
         $expected = time();
         $actual = $this->functionCallDetector->functionCalled($namespace, $functionName, $arguments);
-        $this->assertTrue($actual >= $expected);
+        self::assertTrue($actual >= $expected);
     }
 }

@@ -1,28 +1,31 @@
 <?php
 
-namespace HJerichen\ProphecyPHP;
+namespace HJerichen\ProphecyPHP\Tests\Unit;
 
+use HJerichen\ProphecyPHP\ArgumentEvaluator;
+use HJerichen\ProphecyPHP\FunctionDelegation;
+use HJerichen\ProphecyPHP\FunctionProphecy;
+use HJerichen\ProphecyPHP\FunctionProphecyStorage;
+use HJerichen\ProphecyPHP\FunctionRevealer;
+use HJerichen\ProphecyPHP\NamespaceProphecy;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Prophecy\ObjectProphecy;
 use Prophecy\Prophet;
 
 /**
- * Class PHPBuiltInFunctionsTest
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class PHPBuiltInFunctionsTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var NamespaceProphecy
      */
     private $namespaceProphecy;
-    /**
-     * @var Prophet | ObjectProphecy
-     */
-    private $prophet;
     /**
      * @var string
      */
@@ -31,10 +34,6 @@ class PHPBuiltInFunctionsTest extends TestCase
      * @var FunctionProphecyStorage | ObjectProphecy
      */
     private $functionProphecyStorage;
-    /**
-     * @var FunctionRevealer | ObjectProphecy
-     */
-    private $functionRevealer;
     /**
      * @var ObjectProphecy | MockObject
      */
@@ -60,14 +59,15 @@ class PHPBuiltInFunctionsTest extends TestCase
         $this->objectProphecy->method('reveal')->willReturn($this->functionDelegation->reveal());
         $this->methodProphecy = $this->prophesize(MethodProphecy::class);
 
-        $this->prophet = $this->createMock(Prophet::class);
-        $this->prophet->method('prophesize')->with(FunctionDelegation::class)->willReturn($this->objectProphecy);
+        $prophet = $this->createMock(Prophet::class);
+        $prophet->method('prophesize')->with(FunctionDelegation::class)->willReturn($this->objectProphecy);
 
         $this->functionProphecyStorage = $this->prophesize(FunctionProphecyStorage::class);
-        $this->functionRevealer = $this->prophesize(FunctionRevealer::class);
         $this->namespace = 'namespace';
 
-        $this->namespaceProphecy = new NamespaceProphecy($this->prophet, $this->namespace, $this->functionProphecyStorage->reveal(), $this->functionRevealer->reveal());
+        $functionRevealer = $this->prophesize(FunctionRevealer::class);
+
+        $this->namespaceProphecy = new NamespaceProphecy($prophet, $this->namespace, $this->functionProphecyStorage->reveal(), $functionRevealer->reveal());
     }
 
     /**
@@ -94,7 +94,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->file_get_contents('file');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -106,7 +106,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->file_put_contents('filename', 'content');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -118,7 +118,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->scandir('dir');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -130,7 +130,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->is_file('file');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -142,7 +142,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->touch('file');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -154,7 +154,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->unlink('file');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -166,7 +166,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->copy('file1', 'file2');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -178,7 +178,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->strtotime('time');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -190,7 +190,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->time();
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -202,7 +202,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->memory_get_peak_usage();
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -214,7 +214,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->sleep(2);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -226,7 +226,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->usleep(2);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -238,7 +238,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->pcntl_async_signals(true);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -255,7 +255,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->pcntl_signal(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -268,7 +268,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->posix_getpid(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -281,7 +281,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->posix_setsid(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -294,7 +294,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->posix_getsid(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -307,7 +307,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->getmypid(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -320,7 +320,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->exit(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -333,7 +333,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->exec(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -346,7 +346,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->unserialize(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -359,7 +359,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->var_export(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -372,7 +372,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->get_class(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -385,7 +385,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->dns_get_record(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -398,7 +398,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->file_exists(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -411,7 +411,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->filemtime(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -424,7 +424,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->microtime(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -436,7 +436,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->date('Y', 1234);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -449,7 +449,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->uniqid(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -462,7 +462,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->is_dir(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -475,7 +475,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->mkdir(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -488,7 +488,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->gc_disable(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -501,7 +501,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->gc_enable(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -514,7 +514,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->fwrite(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -527,7 +527,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->fopen(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -540,7 +540,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->mail(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -553,7 +553,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->chmod(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -566,6 +566,6 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->session_write_close(...$arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 }

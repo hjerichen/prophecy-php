@@ -1,16 +1,15 @@
 <?php
-/** @noinspection SpellCheckingInspection */
-/** @noinspection PhpUnused */
-
+/**
+ * @noinspection SpellCheckingInspection
+ * @noinspection PhpDocSignatureInspection
+ * @noinspection PhpMissingParamTypeInspection
+ */
 
 namespace HJerichen\ProphecyPHP;
-
 
 use Prophecy\Prophecy\MethodProphecy;
 
 /**
- * Class PHPBuiltInFunctions
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 trait PHPBuiltInFunctions

@@ -1,17 +1,21 @@
 <?php
 
-namespace HJerichen\ProphecyPHP;
+namespace HJerichen\ProphecyPHP\Tests\Unit;
 
+use HJerichen\ProphecyPHP\ArgumentEvaluator;
+use HJerichen\ProphecyPHP\FunctionDelegation;
+use HJerichen\ProphecyPHP\FunctionProphecy;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
 /**
- * Class FunctionProphecyTest
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class FunctionProphecyTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var FunctionProphecy
      */
@@ -58,7 +62,7 @@ class FunctionProphecyTest extends TestCase
     {
         $expected = 'aaf13e822dd18dbb1dd9d3bca35c71b5';
         $actual = $this->functionProphecy->getIdentification();
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -68,7 +72,7 @@ class FunctionProphecyTest extends TestCase
     {
         $expected = $this->namespace;
         $actual = $this->functionProphecy->getNamespace();
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -78,7 +82,7 @@ class FunctionProphecyTest extends TestCase
     {
         $expected = $this->functionName;
         $actual = $this->functionProphecy->getFunctionName();
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -92,7 +96,7 @@ class FunctionProphecyTest extends TestCase
 
         $expected = 10;
         $actual = $this->functionProphecy->scoreArguments($arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -106,7 +110,7 @@ class FunctionProphecyTest extends TestCase
 
         $expected = 0;
         $actual = $this->functionProphecy->scoreArguments($arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -118,6 +122,6 @@ class FunctionProphecyTest extends TestCase
 
         $expected = 'something';
         $actual = $this->functionProphecy->makeCall();
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 }

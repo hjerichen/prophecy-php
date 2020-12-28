@@ -1,16 +1,18 @@
 <?php
 
-namespace HJerichen\ProphecyPHP;
+namespace HJerichen\ProphecyPHP\Tests\Unit;
 
+use HJerichen\ProphecyPHP\FunctionProphecyStorage;
+use HJerichen\ProphecyPHP\FunctionRevealer;
+use HJerichen\ProphecyPHP\NamespaceProphecy;
+use HJerichen\ProphecyPHP\PHPProphet;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Exception\Prediction\PredictionException;
 use Prophecy\Prophet;
-use Text_Template;
+use SebastianBergmann\Template\Template;
 
 /**
- * Class PHPProphetTest
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class PHPProphetTest extends TestCase
@@ -44,13 +46,13 @@ class PHPProphetTest extends TestCase
      */
     public function testProphesize(): void
     {
-        $textTemplate = new Text_Template(__DIR__ . '/../../src/function.tpl');
+        $textTemplate = new Template(__DIR__ . '/../../src/function.tpl');
         $functionProphecyStorage = FunctionProphecyStorage::getInstance();
         $functionRevealer = new FunctionRevealer($textTemplate);
 
         $expected = new NamespaceProphecy($this->prophet, 'namespace', $functionProphecyStorage, $functionRevealer);
         $actual = $this->phpProphet->prophesize('namespace');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -58,7 +60,7 @@ class PHPProphetTest extends TestCase
      */
     public function testCheckPredictions(): void
     {
-        $this->prophet->expects($this->once())->method('checkPredictions')->with();
+        $this->prophet->expects(self::once())->method('checkPredictions')->with();
 
         $this->phpProphet->checkPredictions();
     }

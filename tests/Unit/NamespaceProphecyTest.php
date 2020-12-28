@@ -1,29 +1,32 @@
 <?php
 
-namespace HJerichen\ProphecyPHP;
+namespace HJerichen\ProphecyPHP\Tests\Unit;
 
+use HJerichen\ProphecyPHP\ArgumentEvaluator;
+use HJerichen\ProphecyPHP\FunctionDelegation;
+use HJerichen\ProphecyPHP\FunctionProphecy;
+use HJerichen\ProphecyPHP\FunctionProphecyStorage;
+use HJerichen\ProphecyPHP\FunctionRevealer;
+use HJerichen\ProphecyPHP\NamespaceProphecy;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Prophecy\ObjectProphecy;
 use Prophecy\Prophecy\ProphecyInterface;
 use Prophecy\Prophet;
 
 /**
- * Class NamespaceProphecyTest
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class NamespaceProphecyTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var NamespaceProphecy
      */
     private $namespaceProphecy;
-    /**
-     * @var Prophet | ObjectProphecy
-     */
-    private $prophet;
     /**
      * @var string
      */
@@ -56,19 +59,19 @@ class NamespaceProphecyTest extends TestCase
     {
         parent::setUp();
 
-        $this->functionDelegation = $this->prophesize(FunctionDelegation::class);
-        $this->objectProphecy = $this->createMock(ObjectProphecy::class);
-        $this->objectProphecy->method('reveal')->willReturn($this->functionDelegation->reveal());
-        $this->methodProphecy = $this->prophesize(MethodProphecy::class);
-
-        $this->prophet = $this->createMock(Prophet::class);
-        $this->prophet->method('prophesize')->with(FunctionDelegation::class)->willReturn($this->objectProphecy);
-
         $this->functionProphecyStorage = $this->prophesize(FunctionProphecyStorage::class);
+        $this->functionDelegation = $this->prophesize(FunctionDelegation::class);
         $this->functionRevealer = $this->prophesize(FunctionRevealer::class);
+        $this->objectProphecy = $this->createMock(ObjectProphecy::class);
+        $this->methodProphecy = $this->prophesize(MethodProphecy::class);
         $this->namespace = 'namespace';
 
-        $this->namespaceProphecy = new NamespaceProphecy($this->prophet, $this->namespace, $this->functionProphecyStorage->reveal(), $this->functionRevealer->reveal());
+        $this->objectProphecy->method('reveal')->willReturn($this->functionDelegation->reveal());
+
+        $prophet = $this->createMock(Prophet::class);
+        $prophet->method('prophesize')->with(FunctionDelegation::class)->willReturn($this->objectProphecy);
+
+        $this->namespaceProphecy = new NamespaceProphecy($prophet, $this->namespace, $this->functionProphecyStorage->reveal(), $this->functionRevealer->reveal());
     }
 
     /**
@@ -91,7 +94,7 @@ class NamespaceProphecyTest extends TestCase
      */
     public function testClassImplementsCorrectInterfaces(): void
     {
-        $this->assertInstanceOf(ProphecyInterface::class, $this->namespaceProphecy);
+        self::assertInstanceOf(ProphecyInterface::class, $this->namespaceProphecy);
     }
 
     /**
@@ -104,7 +107,7 @@ class NamespaceProphecyTest extends TestCase
 
         $expected = $this->methodProphecy->reveal();
         $actual = $this->namespaceProphecy->__call($functionName, $arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**

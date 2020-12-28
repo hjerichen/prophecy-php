@@ -1,14 +1,10 @@
 <?php
 
-
 namespace HJerichen\ProphecyPHP;
-
 
 use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
 
 /**
- * Class FunctionProphecyStorage
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class FunctionProphecyStorage
@@ -106,11 +102,7 @@ class FunctionProphecyStorage
      */
     private function getFunctionPropheciesForFunctionName(string $namespace, string $functionName): array
     {
-        if (!isset($this->functionProphecies[$namespace][$functionName])) {
-            return [];
-        }
-
-        return $this->functionProphecies[$namespace][$functionName];
+        return $this->functionProphecies[$namespace][$functionName] ?? [];
     }
 
     /**

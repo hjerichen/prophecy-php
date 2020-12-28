@@ -1,16 +1,12 @@
 <?php
 
-
 namespace HJerichen\ProphecyPHP;
-
 
 use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Prophecy\ProphecyInterface;
 use Prophecy\Prophet;
 
 /**
- * Class NamespaceProphecy
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class NamespaceProphecy implements ProphecyInterface

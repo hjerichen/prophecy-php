@@ -1,28 +1,24 @@
 <?php
 
-
 namespace HJerichen\ProphecyPHP;
 
-
-use Text_Template;
+use SebastianBergmann\Template\Template;
 
 /**
- * Class FunctionRevealer
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class FunctionRevealer
 {
     /**
-     * @var Text_Template
+     * @var Template
      */
     private $textTemplate;
 
     /**
      * FunctionRevealer constructor.
-     * @param Text_Template $textTemplate
+     * @param Template $textTemplate
      */
-    public function __construct(Text_Template $textTemplate)
+    public function __construct(Template $textTemplate)
     {
         $this->textTemplate = $textTemplate;
     }

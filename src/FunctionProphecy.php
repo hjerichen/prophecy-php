@@ -1,12 +1,8 @@
 <?php
 
-
 namespace HJerichen\ProphecyPHP;
 
-
 /**
- * Class FunctionProphecy
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class FunctionProphecy

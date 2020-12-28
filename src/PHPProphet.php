@@ -1,16 +1,12 @@
 <?php
 
-
 namespace HJerichen\ProphecyPHP;
-
 
 use Prophecy\Exception\Prediction\PredictionException;
 use Prophecy\Prophet;
-use Text_Template;
+use SebastianBergmann\Template\Template;
 
 /**
- * Class PHPProphet
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class PHPProphet
@@ -39,7 +35,7 @@ class PHPProphet
      */
     public function prophesize(string $namespace): NamespaceProphecy
     {
-        $textTemplate = new Text_Template(__DIR__ . '/function.tpl');
+        $textTemplate = new Template(__DIR__ . '/function.tpl');
         $functionProphecyStorage = FunctionProphecyStorage::getInstance();
         $functionRevealer = new FunctionRevealer($textTemplate);
 

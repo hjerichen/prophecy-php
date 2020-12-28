@@ -1,12 +1,11 @@
 <?php
 
-namespace HJerichen\ProphecyPHP;
+namespace HJerichen\ProphecyPHP\Tests\Unit;
 
+use HJerichen\ProphecyPHP\FunctionDelegation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class FunctionDelegationTest
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class FunctionDelegationTest extends TestCase

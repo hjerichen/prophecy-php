@@ -1,12 +1,8 @@
 <?php
 
-
-namespace HJerichen\ProphecyPHP\Integration;
-
+namespace HJerichen\ProphecyPHP\Tests\Integration;
 
 /**
- * Class IntegrationWithOtherClass
- * @package integration
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class IntegrationWithOtherClass

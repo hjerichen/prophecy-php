@@ -1,17 +1,21 @@
 <?php
+/** @noinspection DuplicatedCode */
 
-namespace HJerichen\ProphecyPHP;
+namespace HJerichen\ProphecyPHP\Tests\Unit;
 
 use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
+use HJerichen\ProphecyPHP\FunctionProphecy;
+use HJerichen\ProphecyPHP\FunctionProphecyStorage;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
- * Class FunctionProphecyStorageTest
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class FunctionProphecyStorageTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var FunctionProphecyStorage
      */
@@ -37,7 +41,7 @@ class FunctionProphecyStorageTest extends TestCase
     {
         $expected = FunctionProphecyStorage::class;
         $actual = FunctionProphecyStorage::getInstance();
-        $this->assertInstanceOf($expected, $actual);
+        self::assertInstanceOf($expected, $actual);
     }
 
     /**
@@ -48,7 +52,7 @@ class FunctionProphecyStorageTest extends TestCase
     {
         $expected = FunctionProphecyStorage::getInstance();
         $actual = FunctionProphecyStorage::getInstance();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     /**
@@ -58,7 +62,7 @@ class FunctionProphecyStorageTest extends TestCase
     {
         $expected = [];
         $actual = $this->functionProphecyStorage->getFunctionNamesOfSetProphecies('namespace');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -75,7 +79,7 @@ class FunctionProphecyStorageTest extends TestCase
             'count'
         ];
         $actual = $this->functionProphecyStorage->getFunctionNamesOfSetProphecies('namespace1');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -87,7 +91,7 @@ class FunctionProphecyStorageTest extends TestCase
 
         $expected = [];
         $actual = $this->functionProphecyStorage->getFunctionNamesOfSetProphecies('namespace1');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -106,7 +110,7 @@ class FunctionProphecyStorageTest extends TestCase
 
         $expected = $functionProphecy;
         $actual = $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -126,7 +130,7 @@ class FunctionProphecyStorageTest extends TestCase
 
         $expected = $functionProphecy;
         $actual = $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -164,7 +168,7 @@ class FunctionProphecyStorageTest extends TestCase
 
         $expected = $functionProphecy2;
         $actual = $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -200,7 +204,7 @@ class FunctionProphecyStorageTest extends TestCase
 
         $expected = $functionProphecy2;
         $actual = $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -214,7 +218,7 @@ class FunctionProphecyStorageTest extends TestCase
 
         $expected = [];
         $actual = $this->functionProphecyStorage->getFunctionNamesOfSetProphecies('namespace1');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -228,7 +232,7 @@ class FunctionProphecyStorageTest extends TestCase
 
         $expected = ['time'];
         $actual = $this->functionProphecyStorage->getFunctionNamesOfSetProphecies('namespace1');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -240,7 +244,7 @@ class FunctionProphecyStorageTest extends TestCase
 
         $expected = true;
         $actual = $this->functionProphecyStorage->hasFunctionPropheciesForFunctionName('namespace1', 'time');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -252,7 +256,7 @@ class FunctionProphecyStorageTest extends TestCase
 
         $expected = false;
         $actual = $this->functionProphecyStorage->hasFunctionPropheciesForFunctionName('namespace1', 'count');
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
 

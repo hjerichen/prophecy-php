@@ -1,16 +1,12 @@
 <?php
 
-namespace HJerichen\ProphecyPHP\Integration;
-
-include_once 'IntegrationWithOtherClass.php';
+namespace HJerichen\ProphecyPHP\Tests\Integration;
 
 use HJerichen\ProphecyPHP\NamespaceProphecy;
 use HJerichen\ProphecyPHP\PHPProphetTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class IntegrationWithOtherClassTest
- * @package integration
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class IntegrationWithOtherClassTest extends TestCase
@@ -48,7 +44,7 @@ class IntegrationWithOtherClassTest extends TestCase
     public function testGetMicroTimeWithNotMocked(): void
     {
         $actual = $this->object->getMicroTime();
-        $this->assertTrue($actual > 0);
+        self::assertTrue($actual > 0);
     }
 
     /**
@@ -63,7 +59,7 @@ class IntegrationWithOtherClassTest extends TestCase
 
         $expected = 123;
         $actual = $this->object->getMicroTime();
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
 

@@ -1,13 +1,12 @@
 <?php
 
-namespace HJerichen\ProphecyPHP\Exception;
+namespace HJerichen\ProphecyPHP\Tests\Unit\Exception;
 
+use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 /**
- * Class FunctionProphecyNotFoundExceptionTest
- * @package HJerichen\ProphecyPHP\Exception
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class FunctionProphecyNotFoundExceptionTest extends TestCase
@@ -35,7 +34,7 @@ class FunctionProphecyNotFoundExceptionTest extends TestCase
      */
     public function testClassImplementsCorrectInterface(): void
     {
-        $this->assertInstanceOf(RuntimeException::class, $this->exception);
+        self::assertInstanceOf(RuntimeException::class, $this->exception);
     }
 
     /**
@@ -45,7 +44,7 @@ class FunctionProphecyNotFoundExceptionTest extends TestCase
     {
         $expected = "Unexpected call of \"time\" in namespace \"something\" with passed arguments:\n[4, \"test\"]";
         $actual = $this->exception->getMessage();
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
 

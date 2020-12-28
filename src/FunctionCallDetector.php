@@ -1,14 +1,10 @@
 <?php
 
-
 namespace HJerichen\ProphecyPHP;
-
 
 use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
 
 /**
- * Class FunctionCaller
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class FunctionCallDetector

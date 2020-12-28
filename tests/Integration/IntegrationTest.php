@@ -1,6 +1,6 @@
 <?php
 
-namespace HJerichen\ProphecyPHP\Integration;
+namespace HJerichen\ProphecyPHP\Tests\Integration;
 
 use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
 use HJerichen\ProphecyPHP\NamespaceProphecy;
@@ -8,12 +8,9 @@ use HJerichen\ProphecyPHP\PHPProphetTrait;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\Exception\Prediction\PredictionException;
-use ReflectionException;
 use ReflectionProperty;
 
 /**
- * Class IntegrationTest
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class IntegrationTest extends TestCase
@@ -43,7 +40,7 @@ class IntegrationTest extends TestCase
         $this->php->time()->willReturn(2);
         $this->php->reveal();
 
-        $this->assertEquals(2, time());
+        self::assertEquals(2, time());
     }
 
     /**
@@ -54,8 +51,8 @@ class IntegrationTest extends TestCase
         $this->php->time()->willReturn(2);
         $this->php->reveal();
 
-        $this->assertEquals(2, time());
-        $this->assertEquals(2, time());
+        self::assertEquals(2, time());
+        self::assertEquals(2, time());
     }
 
     /**
@@ -66,8 +63,8 @@ class IntegrationTest extends TestCase
         $this->php->time()->willReturn(2, 5);
         $this->php->reveal();
 
-        $this->assertEquals(2, time());
-        $this->assertEquals(5, time());
+        self::assertEquals(2, time());
+        self::assertEquals(5, time());
     }
 
     /**
@@ -78,11 +75,11 @@ class IntegrationTest extends TestCase
         $this->php->time()->willReturn(2);
         $this->php->reveal();
 
-        $this->assertEquals(2, time());
+        self::assertEquals(2, time());
 
         $this->php->unReveal();
-        $this->assertNotEquals(2, time());
-        $this->assertIsInt(time());
+        self::assertNotEquals(2, time());
+        self::assertIsInt(time());
     }
 
     /**
@@ -93,7 +90,7 @@ class IntegrationTest extends TestCase
         $this->php->date('d.m.Y H:i:s')->willReturn('16.07.2019 21:43:00');
         $this->php->reveal();
 
-        $this->assertEquals('16.07.2019 21:43:00', date('d.m.Y H:i:s'));
+        self::assertEquals('16.07.2019 21:43:00', date('d.m.Y H:i:s'));
     }
 
     /**
@@ -104,7 +101,7 @@ class IntegrationTest extends TestCase
         $this->php->date(Argument::any())->willReturn('16.07.2019 21:43:00');
         $this->php->reveal();
 
-        $this->assertEquals('16.07.2019 21:43:00', date('d.m.Y H:i:s'));
+        self::assertEquals('16.07.2019 21:43:00', date('d.m.Y H:i:s'));
     }
 
     /**
@@ -128,7 +125,7 @@ class IntegrationTest extends TestCase
         $this->php->date('d.m.Y H:i:s', 1000)->willReturn('16.07.2019 21:43:00');
         $this->php->reveal();
 
-        $this->assertEquals('16.07.2019 21:43:00', date('d.m.Y H:i:s', 1000));
+        self::assertEquals('16.07.2019 21:43:00', date('d.m.Y H:i:s', 1000));
     }
 
     /**
@@ -158,7 +155,6 @@ class IntegrationTest extends TestCase
     /**
      *
      * @throws PredictionException
-     * @throws ReflectionException
      */
     public function testFunctionShouldBeCalledNotFulfilled(): void
     {
@@ -167,7 +163,6 @@ class IntegrationTest extends TestCase
 
         $this->resetProphecy();
 
-        /** @noinspection PhpParamsInspection */
         $this->expectException(PredictionException::class);
         $this->phpProphet->checkPredictions();
     }
@@ -181,7 +176,7 @@ class IntegrationTest extends TestCase
         $this->php->time()->willReturn(4);
         $this->php->reveal();
 
-        $this->assertEquals(4, time());
+        self::assertEquals(4, time());
     }
 
     /**
@@ -193,16 +188,13 @@ class IntegrationTest extends TestCase
         $this->php->date('Y')->willReturn('2019');
         $this->php->reveal();
 
-        $this->assertEquals('2020', date('m'));
-        $this->assertEquals('2019', date('Y'));
+        self::assertEquals('2020', date('m'));
+        self::assertEquals('2019', date('Y'));
     }
 
 
     /* HELPER */
 
-    /**
-     * @throws ReflectionException
-     */
     private function resetProphecy(): void
     {
         $reflectionProperty = new ReflectionProperty(TestCase::class, 'prophet');

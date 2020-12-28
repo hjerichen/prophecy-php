@@ -1,13 +1,12 @@
 <?php
 
-namespace HJerichen\ProphecyPHP;
+namespace HJerichen\ProphecyPHP\Tests\Unit;
 
+use HJerichen\ProphecyPHP\ArgumentEvaluator;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument\ArgumentsWildcard;
 
 /**
- * Class ArgumentEvaluatorTest
- * @package HJerichen\ProphecyPHP
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
 class ArgumentEvaluatorTest extends TestCase
@@ -35,7 +34,7 @@ class ArgumentEvaluatorTest extends TestCase
      */
     public function testClassImplementsCorrectInterfaces(): void
     {
-        $this->assertInstanceOf(ArgumentsWildcard::class, $this->argumentEvaluator);
+        self::assertInstanceOf(ArgumentsWildcard::class, $this->argumentEvaluator);
     }
 
 

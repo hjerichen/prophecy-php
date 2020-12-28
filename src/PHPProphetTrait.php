@@ -39,7 +39,6 @@ trait PHPProphetTrait
     /**
      * @noinspection PhpUnhandledExceptionInspection
      * @noinspection PhpUndefinedClassInspection
-     * @noinspection PhpUnused
      */
     public function runBare(): void
     {
