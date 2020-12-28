@@ -1,14 +1,13 @@
-<phpunit
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.0/phpunit.xsd"
-        cacheResult="false"
-        bootstrap="./vendor/autoload.php">
-    <logging>
-        <log type="coverage-clover" target="./logs/clover.xml"/>
-    </logging>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         cacheResult="false"
+         bootstrap="./vendor/autoload.php">
+    <coverage>
+        <include>
             <directory suffix=".php">./src</directory>
-        </whitelist>
-    </filter>
+        </include>
+        <report>
+            <clover outputFile="./logs/clover.xml" />
+        </report>
+    </coverage>
 </phpunit>
