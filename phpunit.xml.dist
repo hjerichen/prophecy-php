@@ -2,12 +2,14 @@
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
          cacheResult="false"
          bootstrap="./vendor/autoload.php">
+    <testsuites>
+        <testsuite name="Test Suite">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
     <coverage>
         <include>
             <directory suffix=".php">./src</directory>
         </include>
-        <report>
-            <clover outputFile="./logs/clover.xml" />
-        </report>
     </coverage>
 </phpunit>
