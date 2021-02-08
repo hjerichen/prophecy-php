@@ -10,14 +10,9 @@ use PHPUnit\Framework\TestCase;
  */
 class FunctionDelegationTest extends TestCase
 {
-    /**
-     * @var FunctionDelegation
-     */
+    /** @var FunctionDelegation */
     private $functionDelegation;
 
-    /**
-     *
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -28,16 +23,10 @@ class FunctionDelegationTest extends TestCase
 
     /* TESTS */
 
-    /**
-     *
-     */
     public function testDelegate(): void
     {
         $this->expectOutputString('');
 
         $this->functionDelegation->delegate('time', []);
     }
-
-
-    /* HELPERS */
 }

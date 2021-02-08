@@ -14,11 +14,6 @@ use Prophecy\Prophecy\MethodProphecy;
  */
 trait PHPBuiltInFunctions
 {
-    /**
-     * @param string $functionName
-     * @param array $arguments
-     * @return MethodProphecy
-     */
     abstract public function __call(string $functionName, array $arguments): MethodProphecy;
 
 

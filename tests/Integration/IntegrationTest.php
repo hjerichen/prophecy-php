@@ -17,14 +17,9 @@ class IntegrationTest extends TestCase
 {
     use PHPProphetTrait;
 
-    /**
-     * @var NamespaceProphecy
-     */
+    /** @var NamespaceProphecy */
     private $php;
 
-    /**
-     *
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -32,9 +27,6 @@ class IntegrationTest extends TestCase
         $this->php = $this->prophesizePHP(__NAMESPACE__);
     }
 
-    /**
-     *
-     */
     public function testFunctionWillReturnSimple(): void
     {
         $this->php->time()->willReturn(2);
@@ -43,9 +35,6 @@ class IntegrationTest extends TestCase
         self::assertEquals(2, time());
     }
 
-    /**
-     *
-     */
     public function testFunctionWillReturnSimpleCalledTwoTimes(): void
     {
         $this->php->time()->willReturn(2);
@@ -55,9 +44,6 @@ class IntegrationTest extends TestCase
         self::assertEquals(2, time());
     }
 
-    /**
-     *
-     */
     public function testFunctionWillReturnMultiple(): void
     {
         $this->php->time()->willReturn(2, 5);
@@ -67,9 +53,6 @@ class IntegrationTest extends TestCase
         self::assertEquals(5, time());
     }
 
-    /**
-     *
-     */
     public function testFunctionWillBeStandardAfterUnReveal(): void
     {
         $this->php->time()->willReturn(2);
@@ -82,9 +65,6 @@ class IntegrationTest extends TestCase
         self::assertIsInt(time());
     }
 
-    /**
-     *
-     */
     public function testFunctionWillReturnSimpleWithParameter(): void
     {
         $this->php->date('d.m.Y H:i:s')->willReturn('16.07.2019 21:43:00');
@@ -93,9 +73,6 @@ class IntegrationTest extends TestCase
         self::assertEquals('16.07.2019 21:43:00', date('d.m.Y H:i:s'));
     }
 
-    /**
-     *
-     */
     public function testFunctionWillReturnSimpleWithProphecyArgument(): void
     {
         $this->php->date(Argument::any())->willReturn('16.07.2019 21:43:00');
@@ -104,9 +81,6 @@ class IntegrationTest extends TestCase
         self::assertEquals('16.07.2019 21:43:00', date('d.m.Y H:i:s'));
     }
 
-    /**
-     *
-     */
     public function testFunctionWillReturnSimpleWithWrongParameter(): void
     {
         $this->php->date('d.m.Y H:i:s')->willReturn('16.07.2019 21:43:00');
@@ -114,12 +88,10 @@ class IntegrationTest extends TestCase
 
         $this->expectException(FunctionProphecyNotFoundException::class);
 
+        /** @noinspection PhpExpressionResultUnusedInspection */
         date('d.m.Y H:i');
     }
 
-    /**
-     *
-     */
     public function testFunctionWillReturnSimpleWithMoreThenOneParameter(): void
     {
         $this->php->date('d.m.Y H:i:s', 1000)->willReturn('16.07.2019 21:43:00');
@@ -128,9 +100,6 @@ class IntegrationTest extends TestCase
         self::assertEquals('16.07.2019 21:43:00', date('d.m.Y H:i:s', 1000));
     }
 
-    /**
-     *
-     */
     public function testFunctionWillReturnSimpleWithMoreThenOneParameterButWithOnyOneCalled(): void
     {
         $this->php->date('d.m.Y H:i:s', 1000)->willReturn('16.07.2019 21:43:00');
@@ -138,12 +107,10 @@ class IntegrationTest extends TestCase
 
         $this->expectException(FunctionProphecyNotFoundException::class);
 
+        /** @noinspection PhpExpressionResultUnusedInspection */
         date('d.m.Y H:i:s');
     }
 
-    /**
-     *
-     */
     public function testFunctionShouldBeCalledFulfilled(): void
     {
         $this->php->file_put_contents('/tmp/test.txt', 'test')->shouldBeCalled();
@@ -152,10 +119,6 @@ class IntegrationTest extends TestCase
         file_put_contents('/tmp/test.txt', 'test');
     }
 
-    /**
-     *
-     * @throws PredictionException
-     */
     public function testFunctionShouldBeCalledNotFulfilled(): void
     {
         $this->php->file_put_contents('/tmp/test.txt', 'test')->shouldBeCalled();
@@ -167,9 +130,6 @@ class IntegrationTest extends TestCase
         $this->phpProphet->checkPredictions();
     }
 
-    /**
-     *
-     */
     public function testOverwriteProphecy(): void
     {
         $this->php->time()->willReturn(2);
@@ -179,9 +139,6 @@ class IntegrationTest extends TestCase
         self::assertEquals(4, time());
     }
 
-    /**
-     *
-     */
     public function testCalculateCorrectProphecy(): void
     {
         $this->php->date(Argument::any())->willReturn('2020');
@@ -199,6 +156,8 @@ class IntegrationTest extends TestCase
     {
         $reflectionProperty = new ReflectionProperty(TestCase::class, 'prophet');
         $reflectionProperty->setAccessible(true);
+
+        /** @noinspection PhpRedundantOptionalArgumentInspection */
         $reflectionProperty->setValue($this, null);
     }
 }

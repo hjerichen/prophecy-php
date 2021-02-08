@@ -9,18 +9,11 @@ use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
  */
 class FunctionCallDetector
 {
-    /**
-     * @var FunctionCallDetector
-     */
+    /** @var FunctionCallDetector */
     private static $instance;
-    /**
-     * @var FunctionProphecyStorage
-     */
+    /** @var FunctionProphecyStorage */
     private $functionProphecyStorage;
 
-    /**
-     * @return FunctionCallDetector
-     */
     public static function getInstance(): FunctionCallDetector
     {
         if (self::$instance === null) {
@@ -29,10 +22,6 @@ class FunctionCallDetector
         return self::$instance;
     }
 
-    /**
-     * FunctionCallDetector constructor.
-     * @param FunctionProphecyStorage $functionProphecyStorage
-     */
     public function __construct(FunctionProphecyStorage $functionProphecyStorage)
     {
         $this->functionProphecyStorage = $functionProphecyStorage;

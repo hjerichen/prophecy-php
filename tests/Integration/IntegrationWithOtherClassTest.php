@@ -13,13 +13,9 @@ class IntegrationWithOtherClassTest extends TestCase
 {
     use PHPProphetTrait;
 
-    /**
-     * @var IntegrationWithOtherClass
-     */
+    /** @var IntegrationWithOtherClass */
     private $object;
-    /**
-     * @var NamespaceProphecy
-     */
+    /** @var NamespaceProphecy */
     private $php;
 
     /**
@@ -38,9 +34,6 @@ class IntegrationWithOtherClassTest extends TestCase
 
     /* TESTS */
 
-    /**
-     *
-     */
     public function testGetMicroTimeWithNotMocked(): void
     {
         $actual = $this->object->getMicroTime();
@@ -61,7 +54,4 @@ class IntegrationWithOtherClassTest extends TestCase
         $actual = $this->object->getMicroTime();
         self::assertEquals($expected, $actual);
     }
-
-
-    /* HELPERS */
 }

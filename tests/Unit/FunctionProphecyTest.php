@@ -16,34 +16,19 @@ class FunctionProphecyTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var FunctionProphecy
-     */
+    /** @var FunctionProphecy */
     private $functionProphecy;
-    /**
-     * @var FunctionDelegation | ObjectProphecy
-     */
+    /** @var FunctionDelegation | ObjectProphecy */
     private $functionDelegation;
-    /**
-     * @var ArgumentEvaluator | ObjectProphecy
-     */
+    /** @var ArgumentEvaluator | ObjectProphecy */
     private $argumentEvaluator;
-    /**
-     * @var string
-     */
+    /** @var string */
     private $namespace = 'something';
-    /**
-     * @var string
-     */
+    /** @var string */
     private $functionName = 'time';
-    /**
-     * @var mixed[]
-     */
+    /** @var mixed[] */
     private $arguments = [true];
 
-    /**
-     *
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -55,9 +40,6 @@ class FunctionProphecyTest extends TestCase
             $this->arguments);
     }
 
-    /**
-     *
-     */
     public function testGetIdentification(): void
     {
         $expected = 'aaf13e822dd18dbb1dd9d3bca35c71b5';
@@ -65,9 +47,6 @@ class FunctionProphecyTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testGetNamespace(): void
     {
         $expected = $this->namespace;
@@ -75,9 +54,6 @@ class FunctionProphecyTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testGetFunctionName(): void
     {
         $expected = $this->functionName;
@@ -85,9 +61,6 @@ class FunctionProphecyTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testScoreArguments(): void
     {
         $arguments = [false];
@@ -99,9 +72,6 @@ class FunctionProphecyTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testScoreArgumentsWithFalse(): void
     {
         $arguments = [];
@@ -113,9 +83,6 @@ class FunctionProphecyTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testMakeCall(): void
     {
         $this->functionDelegation->delegate($this->functionName, $this->arguments)->willReturn('something');

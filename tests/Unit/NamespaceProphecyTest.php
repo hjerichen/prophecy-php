@@ -23,38 +23,21 @@ class NamespaceProphecyTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var NamespaceProphecy
-     */
+    /** @var NamespaceProphecy */
     private $namespaceProphecy;
-    /**
-     * @var string
-     */
+    /** @var string */
     private $namespace;
-    /**
-     * @var FunctionProphecyStorage | ObjectProphecy
-     */
+    /** @var FunctionProphecyStorage | ObjectProphecy */
     private $functionProphecyStorage;
-    /**
-     * @var FunctionRevealer | ObjectProphecy
-     */
+    /** @var FunctionRevealer | ObjectProphecy */
     private $functionRevealer;
-    /**
-     * @var ObjectProphecy | MockObject
-     */
+    /** @var ObjectProphecy | MockObject */
     private $objectProphecy;
-    /**
-     * @var FunctionDelegation | ObjectProphecy
-     */
+    /** @var FunctionDelegation | ObjectProphecy */
     private $functionDelegation;
-    /**
-     * @var MethodProphecy | ObjectProphecy
-     */
+    /** @var MethodProphecy | ObjectProphecy */
     private $methodProphecy;
 
-    /**
-     *
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -89,9 +72,6 @@ class NamespaceProphecyTest extends TestCase
 
     /* TESTS */
 
-    /**
-     *
-     */
     public function testClassImplementsCorrectInterfaces(): void
     {
         self::assertInstanceOf(ProphecyInterface::class, $this->namespaceProphecy);
@@ -110,9 +90,6 @@ class NamespaceProphecyTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testPrepare(): void
     {
         $this->functionRevealer->revealFunction($this->namespace, 'time')->shouldBeCalledOnce();
@@ -121,9 +98,6 @@ class NamespaceProphecyTest extends TestCase
         $this->namespaceProphecy->prepare('time', 'date');
     }
 
-    /**
-     *
-     */
     public function testReveal(): void
     {
         $functionNames = ['time', 'date'];
@@ -135,16 +109,10 @@ class NamespaceProphecyTest extends TestCase
         $this->namespaceProphecy->reveal();
     }
 
-    /**
-     *
-     */
     public function testUnReveal(): void
     {
         $this->functionProphecyStorage->removeFunctionPropheciesForNamespace($this->namespace)->shouldBeCalledOnce();
 
         $this->namespaceProphecy->unReveal();
     }
-
-
-    /* HELPERS */
 }

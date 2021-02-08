@@ -9,19 +9,12 @@ use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
  */
 class FunctionProphecyStorage
 {
-    /**
-     * @var FunctionProphecyStorage
-     */
+    /** @var FunctionProphecyStorage */
     private static $instance;
 
-    /**
-     * @var FunctionProphecy[][][]
-     */
+    /** @var FunctionProphecy[][][] */
     private $functionProphecies = [];
 
-    /**
-     * @return FunctionProphecyStorage
-     */
     public static function getInstance(): FunctionProphecyStorage
     {
         if (self::$instance === null) {
@@ -30,9 +23,6 @@ class FunctionProphecyStorage
         return self::$instance;
     }
 
-    /**
-     * @param FunctionProphecy $functionProphecy
-     */
     public function add(FunctionProphecy $functionProphecy): void
     {
         $namespace = $functionProphecy->getNamespace();
@@ -52,12 +42,6 @@ class FunctionProphecyStorage
         return array_keys($this->functionProphecies[$namespace]);
     }
 
-    /**
-     * @param string $namespace
-     * @param string $functionName
-     * @param mixed[] $arguments
-     * @return FunctionProphecy
-     */
     public function getFunctionProphecy(string $namespace, string $functionName, array $arguments): FunctionProphecy
     {
         $functionProphecy = $this->getFunctionProphecyWithHighestScore($namespace, $functionName, $arguments);
@@ -69,12 +53,6 @@ class FunctionProphecyStorage
         return $functionProphecy;
     }
 
-    /**
-     * @param string $namespace
-     * @param string $functionName
-     * @param array $arguments
-     * @return FunctionProphecy|null
-     */
     private function getFunctionProphecyWithHighestScore(string $namespace, string $functionName, array $arguments): ?FunctionProphecy
     {
         $functionProphecies = $this->getFunctionPropheciesForFunctionName($namespace, $functionName);
@@ -105,19 +83,11 @@ class FunctionProphecyStorage
         return $this->functionProphecies[$namespace][$functionName] ?? [];
     }
 
-    /**
-     * @param string $namespace
-     */
     public function removeFunctionPropheciesForNamespace(string $namespace): void
     {
         $this->functionProphecies[$namespace] = [];
     }
 
-    /**
-     * @param string $namespace
-     * @param string $functionName
-     * @return bool
-     */
     public function hasFunctionPropheciesForFunctionName(string $namespace, string $functionName): bool
     {
         return count($this->getFunctionPropheciesForFunctionName($namespace, $functionName)) > 0;

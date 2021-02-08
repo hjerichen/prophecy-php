@@ -11,14 +11,9 @@ use RuntimeException;
  */
 class FunctionProphecyNotFoundExceptionTest extends TestCase
 {
-    /**
-     * @var FunctionProphecyNotFoundException
-     */
+    /** @var FunctionProphecyNotFoundException */
     private $exception;
 
-    /**
-     *
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -29,24 +24,15 @@ class FunctionProphecyNotFoundExceptionTest extends TestCase
 
     /* TESTS */
 
-    /**
-     *
-     */
     public function testClassImplementsCorrectInterface(): void
     {
         self::assertInstanceOf(RuntimeException::class, $this->exception);
     }
 
-    /**
-     *
-     */
     public function testGetMessage(): void
     {
         $expected = "Unexpected call of \"time\" in namespace \"something\" with passed arguments:\n[4, \"test\"]";
         $actual = $this->exception->getMessage();
         self::assertEquals($expected, $actual);
     }
-
-
-    /* HELPERS */
 }

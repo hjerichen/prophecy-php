@@ -18,22 +18,13 @@ class FunctionCallDetectorTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var FunctionCallDetector
-     */
+    /** @var FunctionCallDetector */
     private $functionCallDetector;
-    /**
-     * @var FunctionProphecyStorage | ObjectProphecy
-     */
+    /** @var FunctionProphecyStorage | ObjectProphecy */
     private $functionProphecyStorage;
-    /**
-     * @var FunctionProphecy | ObjectProphecy
-     */
+    /** @var FunctionProphecy | ObjectProphecy */
     private $functionProphecy;
 
-    /**
-     *
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -44,9 +35,6 @@ class FunctionCallDetectorTest extends TestCase
         $this->functionCallDetector = new FunctionCallDetector($this->functionProphecyStorage->reveal());
     }
 
-    /**
-     *
-     */
     public function testGetInstance(): void
     {
         $expected = FunctionCallDetector::class;
@@ -103,7 +91,6 @@ class FunctionCallDetectorTest extends TestCase
     }
 
     /**
-     *
      * - function not mocked at all.
      * -> standard php function will be called
      */

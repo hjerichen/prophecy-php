@@ -9,24 +9,14 @@ use SebastianBergmann\Template\Template;
  */
 class FunctionRevealer
 {
-    /**
-     * @var Template
-     */
+    /** @var Template */
     private $textTemplate;
 
-    /**
-     * FunctionRevealer constructor.
-     * @param Template $textTemplate
-     */
     public function __construct(Template $textTemplate)
     {
         $this->textTemplate = $textTemplate;
     }
 
-    /**
-     * @param string $namespace
-     * @param string $functionName
-     */
     public function revealFunction(string $namespace, string $functionName): void
     {
         if ($this->isFunctionAlreadyRevealed($namespace, $functionName)) {
@@ -43,11 +33,6 @@ class FunctionRevealer
         eval($renderedTemplate);
     }
 
-    /**
-     * @param string $namespace
-     * @param string $functionName
-     * @return bool
-     */
     private function isFunctionAlreadyRevealed(string $namespace, string $functionName): bool
     {
         return function_exists("{$namespace}\\{$functionName}");

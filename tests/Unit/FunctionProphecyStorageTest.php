@@ -16,14 +16,9 @@ class FunctionProphecyStorageTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var FunctionProphecyStorage
-     */
+    /** @var FunctionProphecyStorage */
     private $functionProphecyStorage;
 
-    /**
-     *
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -34,9 +29,6 @@ class FunctionProphecyStorageTest extends TestCase
 
     /* TESTS */
 
-    /**
-     *
-     */
     public function testGetInstance(): void
     {
         $expected = FunctionProphecyStorage::class;
@@ -94,9 +86,6 @@ class FunctionProphecyStorageTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testGetFunctionProphecy(): void
     {
         $namespace = 'namespace';
@@ -150,9 +139,6 @@ class FunctionProphecyStorageTest extends TestCase
         $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments);
     }
 
-    /**
-     *
-     */
     public function testGetFunctionProphecyWithScoreCompare(): void
     {
         $namespace = 'namespace';
@@ -171,9 +157,6 @@ class FunctionProphecyStorageTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testGetFunctionProphecyWithScoreZero(): void
     {
         $namespace = 'namespace';
@@ -184,13 +167,10 @@ class FunctionProphecyStorageTest extends TestCase
         $this->functionProphecyStorage->add($functionProphecy);
 
         $this->expectException(FunctionProphecyNotFoundException::class);
-        
+
         $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments);
     }
 
-    /**
-     *
-     */
     public function testAddForAlreadyExitingFunctionProphecy(): void
     {
         $namespace = 'namespace';
@@ -207,9 +187,6 @@ class FunctionProphecyStorageTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testRemoveFunctionPropheciesForNamespace(): void
     {
         $this->functionProphecyStorage->add($this->createFunctionProphecy('namespace1', 'time'));
@@ -221,9 +198,6 @@ class FunctionProphecyStorageTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testRemoveFunctionPropheciesForNamespaceWithOtherNamespace(): void
     {
         $this->functionProphecyStorage->add($this->createFunctionProphecy('namespace1', 'time'));
@@ -235,9 +209,6 @@ class FunctionProphecyStorageTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testHasFunctionPropheciesForFunctionName(): void
     {
         $this->functionProphecyStorage->add($this->createFunctionProphecy('namespace1', 'time'));
@@ -247,9 +218,6 @@ class FunctionProphecyStorageTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testHasFunctionPropheciesForFunctionNameWithNotSet(): void
     {
         $this->functionProphecyStorage->add($this->createFunctionProphecy('namespace1', 'time'));
@@ -262,13 +230,6 @@ class FunctionProphecyStorageTest extends TestCase
 
     /* HELPERS */
 
-    /**
-     * @param string $namespace
-     * @param string $functionName
-     * @param array $arguments
-     * @param int $score
-     * @return FunctionProphecy
-     */
     private function createFunctionProphecy(string $namespace, string $functionName, array $arguments = [], int $score = 10): FunctionProphecy
     {
         $identification = md5("{$namespace}::{$functionName}::{$score}");

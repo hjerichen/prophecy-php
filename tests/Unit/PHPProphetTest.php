@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 
 namespace HJerichen\ProphecyPHP\Tests\Unit;
 
@@ -8,7 +9,6 @@ use HJerichen\ProphecyPHP\NamespaceProphecy;
 use HJerichen\ProphecyPHP\PHPProphet;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Exception\Prediction\PredictionException;
 use Prophecy\Prophet;
 use SebastianBergmann\Template\Template;
 
@@ -17,13 +17,9 @@ use SebastianBergmann\Template\Template;
  */
 class PHPProphetTest extends TestCase
 {
-    /**
-     * @var PHPProphet
-     */
+    /** @var PHPProphet */
     private $phpProphet;
-    /**
-     * @var Prophet | MockObject
-     */
+    /** @var Prophet | MockObject */
     private $prophet;
 
     /**
@@ -41,9 +37,6 @@ class PHPProphetTest extends TestCase
 
     /* TESTS */
 
-    /**
-     *
-     */
     public function testProphesize(): void
     {
         $textTemplate = new Template(__DIR__ . '/../../src/function.tpl');
@@ -55,16 +48,10 @@ class PHPProphetTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @throws PredictionException
-     */
     public function testCheckPredictions(): void
     {
         $this->prophet->expects(self::once())->method('checkPredictions')->with();
 
         $this->phpProphet->checkPredictions();
     }
-
-
-    /* HELPERS */
 }

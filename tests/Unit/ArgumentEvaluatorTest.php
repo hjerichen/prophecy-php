@@ -11,14 +11,9 @@ use Prophecy\Argument\ArgumentsWildcard;
  */
 class ArgumentEvaluatorTest extends TestCase
 {
-    /**
-     * @var ArgumentEvaluator
-     */
+    /** @var ArgumentEvaluator */
     private $argumentEvaluator;
 
-    /**
-     *
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -29,14 +24,8 @@ class ArgumentEvaluatorTest extends TestCase
 
     /* TESTS */
 
-    /**
-     *
-     */
     public function testClassImplementsCorrectInterfaces(): void
     {
         self::assertInstanceOf(ArgumentsWildcard::class, $this->argumentEvaluator);
     }
-
-
-    /* HELPERS */
 }

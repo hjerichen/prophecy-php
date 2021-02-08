@@ -4,6 +4,7 @@ namespace HJerichen\ProphecyPHP;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophet;
+use ReflectionException;
 use ReflectionMethod;
 
 /**
@@ -16,11 +17,20 @@ trait PHPProphetTrait
      */
     private $phpProphet;
 
+    /**
+     * @param string $namespace
+     * @return NamespaceProphecy
+     * @throws ReflectionException
+     */
     private function prophesizePHP(string $namespace): NamespaceProphecy
     {
         return $this->getPHPProphet()->prophesize($namespace);
     }
 
+    /**
+     * @return PHPProphet
+     * @throws ReflectionException
+     */
     private function getPHPProphet(): PHPProphet
     {
         if ($this->phpProphet === null) {
@@ -29,6 +39,10 @@ trait PHPProphetTrait
         return $this->phpProphet;
     }
 
+    /**
+     * @return Prophet
+     * @throws ReflectionException
+     */
     private function getProphetFromTestCase(): Prophet
     {
         $refectionMethod = new ReflectionMethod(TestCase::class, 'getProphet');
@@ -37,6 +51,8 @@ trait PHPProphetTrait
     }
 
     /**
+     * @noinspection PhpUnused
+     * @noinspection UnknownInspectionInspection
      * @noinspection PhpUnhandledExceptionInspection
      * @noinspection PhpUndefinedClassInspection
      */

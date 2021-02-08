@@ -22,34 +22,19 @@ class PHPBuiltInFunctionsTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var NamespaceProphecy
-     */
+    /** @var NamespaceProphecy */
     private $namespaceProphecy;
-    /**
-     * @var string
-     */
+    /** @var string */
     private $namespace;
-    /**
-     * @var FunctionProphecyStorage | ObjectProphecy
-     */
+    /** @var FunctionProphecyStorage | ObjectProphecy */
     private $functionProphecyStorage;
-    /**
-     * @var ObjectProphecy | MockObject
-     */
+    /** @var ObjectProphecy | MockObject */
     private $objectProphecy;
-    /**
-     * @var FunctionDelegation | ObjectProphecy
-     */
+    /** @var FunctionDelegation | ObjectProphecy */
     private $functionDelegation;
-    /**
-     * @var MethodProphecy | ObjectProphecy
-     */
+    /** @var MethodProphecy | ObjectProphecy */
     private $methodProphecy;
 
-    /**
-     *
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -85,9 +70,6 @@ class PHPBuiltInFunctionsTest extends TestCase
 
     /* TESTS */
 
-    /**
-     *
-     */
     public function testFileGetContents(): void
     {
         $this->setUpCallTest('file_get_contents', ['file']);
@@ -97,9 +79,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testFilePutContents(): void
     {
         $this->setUpCallTest('file_put_contents', ['filename', 'content']);
@@ -109,9 +88,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testScanDir(): void
     {
         $this->setUpCallTest('scandir', ['dir']);
@@ -121,9 +97,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testIsFile(): void
     {
         $this->setUpCallTest('is_file', ['file']);
@@ -133,9 +106,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testTouch(): void
     {
         $this->setUpCallTest('touch', ['file']);
@@ -145,9 +115,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testUnlink(): void
     {
         $this->setUpCallTest('unlink', ['file']);
@@ -157,9 +124,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testCopy(): void
     {
         $this->setUpCallTest('copy', ['file1', 'file2']);
@@ -169,9 +133,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testStrToTime(): void
     {
         $this->setUpCallTest('strtotime', ['time']);
@@ -181,9 +142,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testTime(): void
     {
         $this->setUpCallTest('time', []);
@@ -193,9 +151,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testMemoryGetPeakUsage(): void
     {
         $this->setUpCallTest('memory_get_peak_usage', []);
@@ -205,9 +160,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testSleep(): void
     {
         $this->setUpCallTest('sleep', [2]);
@@ -217,9 +169,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testUSleep(): void
     {
         $this->setUpCallTest('usleep', [2]);
@@ -229,9 +178,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testPcntlAsyncSignals(): void
     {
         $this->setUpCallTest('pcntl_async_signals', [true]);
@@ -241,9 +187,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testPcntlSignal(): void
     {
         $arguments = [
@@ -258,9 +201,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testPosixGetPid(): void
     {
         $arguments = [];
@@ -271,9 +211,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testPosixSetSid(): void
     {
         $arguments = [];
@@ -284,9 +221,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testPosixGetSid(): void
     {
         $arguments = [10];
@@ -297,9 +231,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testGetMyPid(): void
     {
         $arguments = [];
@@ -310,9 +241,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testExit(): void
     {
         $arguments = [];
@@ -323,9 +251,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testExec(): void
     {
         $arguments = ['command'];
@@ -336,9 +261,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testUnserialize(): void
     {
         $arguments = ['string'];
@@ -349,9 +271,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testVarExport(): void
     {
         $arguments = ['string'];
@@ -362,9 +281,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testGetClass(): void
     {
         $arguments = [$this];
@@ -375,9 +291,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testDnsGetRecord(): void
     {
         $arguments = ['localhost'];
@@ -388,9 +301,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testFileExists(): void
     {
         $arguments = ['file'];
@@ -401,9 +311,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testFileMTime(): void
     {
         $arguments = ['file'];
@@ -414,9 +321,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testMicrotime(): void
     {
         $arguments = [true];
@@ -427,9 +331,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testDate(): void
     {
         $this->setUpCallTest('date', ['Y', 1234]);
@@ -439,9 +340,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testUniqId(): void
     {
         $arguments = ['localhost'];
@@ -452,9 +350,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testIsDir(): void
     {
         $arguments = ['dir'];
@@ -465,9 +360,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testMkdir(): void
     {
         $arguments = ['localhost'];
@@ -478,9 +370,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testGcDisable(): void
     {
         $arguments = [];
@@ -491,9 +380,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testGcEnable(): void
     {
         $arguments = [];
@@ -504,9 +390,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testFWrite(): void
     {
         $arguments = ['localhost', 'string'];
@@ -517,9 +400,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testFOpen(): void
     {
         $arguments = ['file', 'a'];
@@ -530,9 +410,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testMail(): void
     {
         $arguments = ['to', 'subject', 'message'];
@@ -543,9 +420,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testChmod(): void
     {
         $arguments = ['file', 0777];
@@ -556,9 +430,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     *
-     */
     public function testSessionWriteClose(): void
     {
         $arguments = [];
