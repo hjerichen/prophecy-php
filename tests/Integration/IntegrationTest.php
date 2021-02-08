@@ -2,6 +2,7 @@
 
 namespace HJerichen\ProphecyPHP\Tests\Integration;
 
+use BadFunctionCallException;
 use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
 use HJerichen\ProphecyPHP\NamespaceProphecy;
 use HJerichen\ProphecyPHP\PHPProphetTrait;
@@ -147,6 +148,24 @@ class IntegrationTest extends TestCase
 
         self::assertEquals('2020', date('m'));
         self::assertEquals('2019', date('Y'));
+    }
+
+    public function testExit(): void
+    {
+        $exception = new BadFunctionCallException('Function "exit" can not be mocked.');
+        $this->expectExceptionObject($exception);
+
+        $this->php->exit()->shouldBeCalledOnce();
+        $this->php->reveal();
+    }
+
+    public function testDie(): void
+    {
+        $exception = new BadFunctionCallException('Function "die" can not be mocked.');
+        $this->expectExceptionObject($exception);
+
+        $this->php->die()->shouldBeCalledOnce();
+        $this->php->reveal();
     }
 
 

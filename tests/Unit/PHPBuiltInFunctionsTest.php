@@ -241,16 +241,6 @@ class PHPBuiltInFunctionsTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testExit(): void
-    {
-        $arguments = [];
-        $this->setUpCallTest('exit', $arguments);
-
-        $expected = $this->methodProphecy->reveal();
-        $actual = $this->namespaceProphecy->exit(...$arguments);
-        self::assertEquals($expected, $actual);
-    }
-
     public function testExec(): void
     {
         $arguments = ['command'];

@@ -7,6 +7,7 @@
 
 namespace HJerichen\ProphecyPHP;
 
+use BadFunctionCallException;
 use Prophecy\Prophecy\MethodProphecy;
 
 /**
@@ -398,10 +399,33 @@ trait PHPBuiltInFunctions
      * Note: PHP >= 4.2.0 does NOT print the status if it is an integer.
      * </p>
      * @return MethodProphecy
+     * @noinspection PhpUnusedParameterInspection
      */
     public function exit($status = null): MethodProphecy
     {
-        return $this->__call('exit', func_get_args());
+        throw new BadFunctionCallException('Function "exit" can not be mocked.');
+    }
+
+    /**
+     * <p>Terminates execution of the script. Shutdown functions and object destructors will always be executed even if exit is called.</p>
+     * <p>die is a language construct and it can be called without parentheses if no status is passed.</p>
+     * @link https://php.net/manual/en/function.die.php
+     * @param int|string $status [optional] <p>
+     * If status is a string, this function prints the status just before exiting.
+     * </p>
+     * <p>
+     * If status is an integer, that value will be used as the exit status and not printed. Exit statuses should be in the range 0 to 254,
+     * the exit status 255 is reserved by PHP and shall not be used. The status 0 is used to terminate the program successfully.
+     * </p>
+     * <p>
+     * Note: PHP >= 4.2.0 does NOT print the status if it is an integer.
+     * </p>
+     * @return MethodProphecy
+     * @noinspection PhpUnusedParameterInspection
+     */
+    public function die($status = "") : MethodProphecy
+    {
+        throw new BadFunctionCallException('Function "die" can not be mocked.');
     }
 
     /**
