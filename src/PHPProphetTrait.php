@@ -61,8 +61,9 @@ trait PHPProphetTrait
         try {
             parent::runBare();
         } finally {
-            if ($this->phpProphet)
+            if ($this->phpProphet) {
                 $this->phpProphet->unReveal();
+            }
         }
     }
 }
