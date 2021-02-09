@@ -12,10 +12,7 @@ use ReflectionMethod;
  */
 trait PHPProphetTrait
 {
-    /**
-     * @var PHPProphet
-     */
-    private $phpProphet;
+    private PHPProphet $phpProphet;
 
     /**
      * @param string $namespace
@@ -33,7 +30,7 @@ trait PHPProphetTrait
      */
     private function getPHPProphet(): PHPProphet
     {
-        if ($this->phpProphet === null) {
+        if (!isset($this->phpProphet)) {
             $this->phpProphet = new PHPProphet($this->getProphetFromTestCase());
         }
         return $this->phpProphet;
@@ -61,7 +58,7 @@ trait PHPProphetTrait
         try {
             parent::runBare();
         } finally {
-            if ($this->phpProphet) {
+            if (isset($this->phpProphet)) {
                 $this->phpProphet->unReveal();
             }
         }

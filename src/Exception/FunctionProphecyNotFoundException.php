@@ -13,6 +13,8 @@ class FunctionProphecyNotFoundException extends RuntimeException
     public function __construct(string $namespace, string $functionName, array $arguments)
     {
         $unexpectedArguments = (new StringUtil())->stringify($arguments);
-        parent::__construct("Unexpected call of \"{$functionName}\" in namespace \"{$namespace}\" with passed arguments:\n{$unexpectedArguments}");
+        $message = "Unexpected call of \"{$functionName}\" in namespace \"{$namespace}\" with passed arguments:\n{$unexpectedArguments}";
+
+        parent::__construct($message);
     }
 }

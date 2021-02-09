@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 
 namespace HJerichen\ProphecyPHP\Tests\Integration;
 
@@ -13,10 +14,8 @@ class IntegrationWithOtherClassTest extends TestCase
 {
     use PHPProphetTrait;
 
-    /** @var IntegrationWithOtherClass */
-    private $object;
-    /** @var NamespaceProphecy */
-    private $php;
+    private IntegrationWithOtherClass $object;
+    private NamespaceProphecy $php;
 
     /**
      *

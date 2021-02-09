@@ -9,15 +9,14 @@ use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
  */
 class FunctionProphecyStorage
 {
-    /** @var FunctionProphecyStorage */
-    private static $instance;
+    private static self $instance;
 
     /** @var FunctionProphecy[][][] */
-    private $functionProphecies = [];
+    private array $functionProphecies = [];
 
     public static function getInstance(): FunctionProphecyStorage
     {
-        if (self::$instance === null) {
+        if (!isset(self::$instance)) {
             self::$instance = new self();
         }
         return self::$instance;

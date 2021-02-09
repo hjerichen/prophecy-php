@@ -11,8 +11,7 @@ use RuntimeException;
  */
 class FunctionProphecyNotFoundExceptionTest extends TestCase
 {
-    /** @var FunctionProphecyNotFoundException */
-    private $exception;
+    private FunctionProphecyNotFoundException $exception;
 
     protected function setUp(): void
     {

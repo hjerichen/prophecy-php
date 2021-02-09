@@ -13,26 +13,21 @@ class NamespaceProphecy implements ProphecyInterface
 {
     use PHPBuiltInFunctions;
 
-    /** @var Prophet */
-    private $prophet;
-    /** @var string */
-    private $namespace;
-    /** @var FunctionProphecyStorage */
-    private $functionProphecyStorage;
-    /** @var FunctionRevealer */
-    private $functionRevealer;
-
+    private FunctionProphecyStorage $functionProphecyStorage;
+    private FunctionRevealer $functionRevealer;
+    private Prophet $prophet;
+    private string $namespace;
 
     public function __construct(
-        Prophet $prophet,
-        string $namespace,
         FunctionProphecyStorage $functionProphecyStorage,
-        FunctionRevealer $functionRevealer
+        FunctionRevealer $functionRevealer,
+        Prophet $prophet,
+        string $namespace
     ) {
-        $this->prophet = $prophet;
-        $this->namespace = $namespace;
         $this->functionProphecyStorage = $functionProphecyStorage;
         $this->functionRevealer = $functionRevealer;
+        $this->namespace = $namespace;
+        $this->prophet = $prophet;
     }
 
     public function __call(string $functionName, array $arguments): MethodProphecy
@@ -42,8 +37,8 @@ class NamespaceProphecy implements ProphecyInterface
         $functionProphecy = new FunctionProphecy(
             $prophecy->reveal(),
             new ArgumentEvaluator($arguments),
-            $this->namespace,
             $functionName,
+            $this->namespace,
             $arguments
         );
         $this->functionProphecyStorage->add($functionProphecy);

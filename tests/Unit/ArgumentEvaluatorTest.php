@@ -11,8 +11,7 @@ use Prophecy\Argument\ArgumentsWildcard;
  */
 class ArgumentEvaluatorTest extends TestCase
 {
-    /** @var ArgumentEvaluator */
-    private $argumentEvaluator;
+    private ArgumentEvaluator $argumentEvaluator;
 
     protected function setUp(): void
     {

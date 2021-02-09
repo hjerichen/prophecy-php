@@ -16,18 +16,14 @@ class FunctionProphecyTest extends TestCase
 {
     use ProphecyTrait;
 
-    /** @var FunctionProphecy */
-    private $functionProphecy;
-    /** @var FunctionDelegation | ObjectProphecy */
-    private $functionDelegation;
-    /** @var ArgumentEvaluator | ObjectProphecy */
-    private $argumentEvaluator;
-    /** @var string */
-    private $namespace = 'something';
-    /** @var string */
-    private $functionName = 'time';
+    private FunctionProphecy $functionProphecy;
+    private ObjectProphecy $functionDelegation;
+    private ObjectProphecy $argumentEvaluator;
+    private string $namespace = 'something';
+    private string $functionName = 'time';
+
     /** @var mixed[] */
-    private $arguments = [true];
+    private array $arguments = [true];
 
     protected function setUp(): void
     {
@@ -36,8 +32,13 @@ class FunctionProphecyTest extends TestCase
         $this->functionDelegation = $this->prophesize(FunctionDelegation::class);
         $this->argumentEvaluator = $this->prophesize(ArgumentEvaluator::class);
 
-        $this->functionProphecy = new FunctionProphecy($this->functionDelegation->reveal(), $this->argumentEvaluator->reveal(), $this->namespace, $this->functionName,
-            $this->arguments);
+        $this->functionProphecy = new FunctionProphecy(
+            $this->functionDelegation->reveal(),
+            $this->argumentEvaluator->reveal(),
+            $this->functionName,
+            $this->namespace,
+            $this->arguments
+        );
     }
 
     public function testGetIdentification(): void

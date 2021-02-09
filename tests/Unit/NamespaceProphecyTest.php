@@ -23,20 +23,13 @@ class NamespaceProphecyTest extends TestCase
 {
     use ProphecyTrait;
 
-    /** @var NamespaceProphecy */
-    private $namespaceProphecy;
-    /** @var string */
-    private $namespace;
-    /** @var FunctionProphecyStorage | ObjectProphecy */
-    private $functionProphecyStorage;
-    /** @var FunctionRevealer | ObjectProphecy */
-    private $functionRevealer;
-    /** @var ObjectProphecy | MockObject */
-    private $objectProphecy;
-    /** @var FunctionDelegation | ObjectProphecy */
-    private $functionDelegation;
-    /** @var MethodProphecy | ObjectProphecy */
-    private $methodProphecy;
+    private NamespaceProphecy $namespaceProphecy;
+    private ObjectProphecy $functionProphecyStorage;
+    private ObjectProphecy $functionDelegation;
+    private ObjectProphecy $functionRevealer;
+    private ObjectProphecy $methodProphecy;
+    private MockObject $objectProphecy;
+    private string $namespace;
 
     protected function setUp(): void
     {
@@ -52,9 +45,16 @@ class NamespaceProphecyTest extends TestCase
         $this->objectProphecy->method('reveal')->willReturn($this->functionDelegation->reveal());
 
         $prophet = $this->createMock(Prophet::class);
-        $prophet->method('prophesize')->with(FunctionDelegation::class)->willReturn($this->objectProphecy);
+        $prophet->method('prophesize')
+            ->with(FunctionDelegation::class)
+            ->willReturn($this->objectProphecy);
 
-        $this->namespaceProphecy = new NamespaceProphecy($prophet, $this->namespace, $this->functionProphecyStorage->reveal(), $this->functionRevealer->reveal());
+        $this->namespaceProphecy = new NamespaceProphecy(
+            $this->functionProphecyStorage->reveal(),
+            $this->functionRevealer->reveal(),
+            $prophet,
+            $this->namespace,
+        );
     }
 
     /**
@@ -63,10 +63,21 @@ class NamespaceProphecyTest extends TestCase
      */
     private function setUpCallTest(string $functionName, array $arguments): void
     {
-        $expectedFunctionProphecy = new FunctionProphecy($this->functionDelegation->reveal(), new ArgumentEvaluator($arguments), $this->namespace, $functionName, $arguments);
+        $expectedFunctionProphecy = new FunctionProphecy(
+            $this->functionDelegation->reveal(),
+            new ArgumentEvaluator($arguments),
+            $functionName,
+            $this->namespace,
+            $arguments
+        );
 
-        $this->functionProphecyStorage->add($expectedFunctionProphecy)->shouldBeCalledOnce();
-        $this->objectProphecy->method('__call')->with('delegate', [$functionName, $arguments])->willReturn($this->methodProphecy->reveal());
+        $this->functionProphecyStorage
+            ->add($expectedFunctionProphecy)
+            ->shouldBeCalledOnce();
+        $this->objectProphecy
+            ->method('__call')
+            ->with('delegate', [$functionName, $arguments])
+            ->willReturn($this->methodProphecy->reveal());
     }
 
 

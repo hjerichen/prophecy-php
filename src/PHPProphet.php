@@ -10,10 +10,9 @@ use SebastianBergmann\Template\Template;
  */
 class PHPProphet
 {
-    /** @var Prophet */
-    private $prophet;
+    private Prophet $prophet;
     /** @var NamespaceProphecy[] */
-    private $namespaceProphecies = [];
+    private array $namespaceProphecies = [];
 
     public function __construct(Prophet $prophet)
     {
@@ -27,10 +26,10 @@ class PHPProphet
         $functionProphecyStorage = FunctionProphecyStorage::getInstance();
 
         $namespaceProphecy = new NamespaceProphecy(
+            $functionProphecyStorage,
+            $functionRevealer,
             $this->prophet,
             $namespace,
-            $functionProphecyStorage,
-            $functionRevealer
         );
         $this->namespaceProphecies[$namespace] = $namespaceProphecy;
 

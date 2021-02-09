@@ -16,8 +16,7 @@ class FunctionProphecyStorageTest extends TestCase
 {
     use ProphecyTrait;
 
-    /** @var FunctionProphecyStorage */
-    private $functionProphecyStorage;
+    private FunctionProphecyStorage $functionProphecyStorage;
 
     protected function setUp(): void
     {

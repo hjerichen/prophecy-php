@@ -10,8 +10,7 @@ use PHPUnit\Framework\TestCase;
  */
 class FunctionDelegationTest extends TestCase
 {
-    /** @var FunctionDelegation */
-    private $functionDelegation;
+    private FunctionDelegation $functionDelegation;
 
     protected function setUp(): void
     {

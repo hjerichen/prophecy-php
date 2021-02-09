@@ -18,12 +18,9 @@ class FunctionCallDetectorTest extends TestCase
 {
     use ProphecyTrait;
 
-    /** @var FunctionCallDetector */
-    private $functionCallDetector;
-    /** @var FunctionProphecyStorage | ObjectProphecy */
-    private $functionProphecyStorage;
-    /** @var FunctionProphecy | ObjectProphecy */
-    private $functionProphecy;
+    private FunctionCallDetector $functionCallDetector;
+    private ObjectProphecy$functionProphecyStorage;
+    private ObjectProphecy$functionProphecy;
 
     protected function setUp(): void
     {

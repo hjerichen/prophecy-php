@@ -9,8 +9,7 @@ use SebastianBergmann\Template\Template;
  */
 class FunctionRevealer
 {
-    /** @var Template */
-    private $textTemplate;
+    private Template $textTemplate;
 
     public function __construct(Template $textTemplate)
     {

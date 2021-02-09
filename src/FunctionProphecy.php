@@ -7,23 +7,24 @@ namespace HJerichen\ProphecyPHP;
  */
 class FunctionProphecy
 {
-    /** @var FunctionDelegation */
-    private $functionDelegation;
-    /** @var ArgumentEvaluator */
-    private $argumentEvaluator;
-    /** @var string */
-    private $functionName;
+    private FunctionDelegation $functionDelegation;
+    private ArgumentEvaluator $argumentEvaluator;
+    private string $functionName;
+    private string $namespace;
     /** @var mixed[] */
-    private $arguments;
-    /** @var string */
-    private $namespace;
+    private array $arguments;
 
-    public function __construct(FunctionDelegation $functionDelegation, ArgumentEvaluator $argumentEvaluator, string $namespace, string $functionName, array $arguments)
-    {
+    public function __construct(
+        FunctionDelegation $functionDelegation,
+        ArgumentEvaluator $argumentEvaluator,
+        string $functionName,
+        string $namespace,
+        array $arguments
+    ) {
         $this->functionDelegation = $functionDelegation;
         $this->argumentEvaluator = $argumentEvaluator;
-        $this->namespace = $namespace;
         $this->functionName = $functionName;
+        $this->namespace = $namespace;
         $this->arguments = $arguments;
     }
 

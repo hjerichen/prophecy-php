@@ -17,14 +17,9 @@ use SebastianBergmann\Template\Template;
  */
 class PHPProphetTest extends TestCase
 {
-    /** @var PHPProphet */
-    private $phpProphet;
-    /** @var Prophet | MockObject */
-    private $prophet;
+    private PHPProphet $phpProphet;
+    private MockObject $prophet;
 
-    /**
-     *
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -39,12 +34,18 @@ class PHPProphetTest extends TestCase
 
     public function testProphesize(): void
     {
+        $namespace = 'namespace';
         $textTemplate = new Template(__DIR__ . '/../../src/function.tpl');
-        $functionProphecyStorage = FunctionProphecyStorage::getInstance();
         $functionRevealer = new FunctionRevealer($textTemplate);
+        $functionProphecyStorage = FunctionProphecyStorage::getInstance();
 
-        $expected = new NamespaceProphecy($this->prophet, 'namespace', $functionProphecyStorage, $functionRevealer);
-        $actual = $this->phpProphet->prophesize('namespace');
+        $expected = new NamespaceProphecy(
+            $functionProphecyStorage,
+            $functionRevealer,
+            $this->prophet,
+            $namespace,
+        );
+        $actual = $this->phpProphet->prophesize($namespace);
         self::assertEquals($expected, $actual);
     }
 
