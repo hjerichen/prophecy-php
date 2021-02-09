@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HJerichen\ProphecyPHP;
 
@@ -45,7 +45,7 @@ class FunctionProphecy
 
     public function scoreArguments(array $arguments): int
     {
-        return $this->argumentEvaluator->scoreArguments($arguments);
+        return $this->argumentEvaluator->scoreArguments($arguments) ?: 0;
     }
 
     /** @return mixed */

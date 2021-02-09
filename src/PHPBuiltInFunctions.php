@@ -3,6 +3,7 @@
  * @noinspection SpellCheckingInspection
  * @noinspection PhpMissingParamTypeInspection
  */
+declare(strict_types=1);
 
 namespace HJerichen\ProphecyPHP;
 

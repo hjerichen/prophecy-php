@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace HJerichen\ProphecyPHP\Tests\Integration;
 
@@ -9,6 +9,6 @@ class IntegrationWithOtherClass
 {
     public function getMicroTime(): int
     {
-        return microtime(true);
+        return (int)microtime(true);
     }
 }

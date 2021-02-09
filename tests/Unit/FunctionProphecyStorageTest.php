@@ -1,5 +1,6 @@
 <?php
 /** @noinspection DuplicatedCode */
+declare(strict_types=1);
 
 namespace HJerichen\ProphecyPHP\Tests\Unit;
 
