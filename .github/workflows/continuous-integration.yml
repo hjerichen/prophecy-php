@@ -7,13 +7,14 @@ on:
 jobs:
 
   test:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
         php:
-          - 7.4
-          - 8.0
+          - 8.2
+          - 8.3
+          - 8.4
         dependencies:
           - "--prefer-lowest"
           - ""
@@ -22,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install PHP
         uses: shivammathur/setup-php@2.9.0
@@ -38,7 +39,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Cache dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-php-${{ matrix.php }}-composer-${{ matrix.dependencies }}-${{ hashFiles('**/composer.json') }}
@@ -55,17 +56,17 @@ jobs:
         run: vendor/bin/phpunit
 
   coverage:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     name: Code Coverage
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install PHP
         uses: shivammathur/setup-php@2.9.0
         with:
-          php-version: 7.4
+          php-version: 8.2
           coverage: pcov
 
       - name: Get Composer Cache Directory
@@ -73,7 +74,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Cache dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-coverage-composer-${{ hashFiles('**/composer.json') }}
