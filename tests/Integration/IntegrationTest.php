@@ -11,7 +11,6 @@ use HJerichen\ProphecyPHP\PHPProphetTrait;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\Exception\Prediction\PredictionException;
-use ReflectionProperty;
 
 /**
  * @author Heiko Jerichen <heiko@jerichen.de>
@@ -90,7 +89,6 @@ class IntegrationTest extends TestCase
 
         $this->expectException(FunctionProphecyNotFoundException::class);
 
-        /** @noinspection PhpExpressionResultUnusedInspection */
         date('d.m.Y H:i');
     }
 
@@ -109,7 +107,6 @@ class IntegrationTest extends TestCase
 
         $this->expectException(FunctionProphecyNotFoundException::class);
 
-        /** @noinspection PhpExpressionResultUnusedInspection */
         date('d.m.Y H:i:s');
     }
 
@@ -126,10 +123,12 @@ class IntegrationTest extends TestCase
         $this->php->file_put_contents('/tmp/test.txt', 'test')->shouldBeCalled();
         $this->php->reveal();
 
-        $this->resetProphecy();
-
-        $this->expectException(PredictionException::class);
-        $this->phpProphet->checkPredictions();
+        try {
+            $this->expectException(PredictionException::class);
+            $this->phpProphet->checkPredictions();
+        } finally {
+            $this->resetProphecy();
+        }
     }
 
     public function testOverwriteProphecy(): void
@@ -151,6 +150,7 @@ class IntegrationTest extends TestCase
         self::assertEquals('2019', date('Y'));
     }
 
+    /** @noinspection PhpUnreachableStatementInspection */
     public function testExit(): void
     {
         $exception = new BadFunctionCallException('Function "exit" can not be mocked.');
@@ -160,6 +160,7 @@ class IntegrationTest extends TestCase
         $this->php->reveal();
     }
 
+    /** @noinspection PhpUnreachableStatementInspection */
     public function testDie(): void
     {
         $exception = new BadFunctionCallException('Function "die" can not be mocked.');
@@ -174,10 +175,6 @@ class IntegrationTest extends TestCase
 
     private function resetProphecy(): void
     {
-        $reflectionProperty = new ReflectionProperty(TestCase::class, 'prophet');
-        $reflectionProperty->setAccessible(true);
-
-        /** @noinspection PhpRedundantOptionalArgumentInspection */
-        $reflectionProperty->setValue($this, null);
+        unset($this->prophet, $this->phpProphet);
     }
 }

@@ -325,7 +325,7 @@ trait PHPBuiltInFunctions
      * @since 4.1.0
      * @since 5.0
      */
-    public function pcntl_signal($signo, callable $handler, bool $restart_syscalls = null): MethodProphecy
+    public function pcntl_signal(int $signo, callable|int $handler, ?bool $restart_syscalls = null): MethodProphecy
     {
         return $this->__call('pcntl_signal', func_get_args());
     }

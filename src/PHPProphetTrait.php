@@ -2,10 +2,13 @@
 
 namespace HJerichen\ProphecyPHP;
 
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\Attributes\After;
+use PHPUnit\Framework\Attributes\PostCondition;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Exception\Prediction\PredictionException;
+use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Prophet;
-use ReflectionException;
-use ReflectionMethod;
 
 /**
  * @author Heiko Jerichen <heiko@jerichen.de>
@@ -13,21 +16,47 @@ use ReflectionMethod;
 trait PHPProphetTrait
 {
     private PHPProphet $phpProphet;
+    private bool $phpProphecyAssertionsCounted = false;
 
-    /**
-     * @param string $namespace
-     * @return NamespaceProphecy
-     * @throws ReflectionException
-     */
     private function prophesizePHP(string $namespace): NamespaceProphecy
     {
         return $this->getPHPProphet()->prophesize($namespace);
     }
 
     /**
-     * @return PHPProphet
-     * @throws ReflectionException
+     * @postCondition
      */
+    #[PostCondition]
+    protected function verifyPhpProphecyDoubles(): void
+    {
+        if ($this->prophecyIsUsed()) return;
+        if (!$this->phpProphecyIsUsed()) return;
+
+        try {
+            $this->phpProphet->checkPredictions();
+        } catch (PredictionException $e) {
+            throw new AssertionFailedError($e->getMessage());
+        } finally {
+            $this->countProphecyAssertions();
+        }
+    }
+
+    /**
+     * @after
+     */
+    #[After]
+    protected function tearDownPhpProphecy(): void
+    {
+        try {
+            if ($this->prophecyIsUsed()) return;
+            if (!$this->phpProphecyIsUsed()) return;
+            if ($this->phpProphecyAssertionsCounted) return;
+            $this->countProphecyAssertions();
+        } finally {
+            unset($this->phpProphet);
+        }
+    }
+
     private function getPHPProphet(): PHPProphet
     {
         if (!isset($this->phpProphet)) {
@@ -36,30 +65,35 @@ trait PHPProphetTrait
         return $this->phpProphet;
     }
 
-    /**
-     * @return Prophet
-     * @throws ReflectionException
-     */
     private function getProphetFromTestCase(): Prophet
     {
-        $refectionMethod = new ReflectionMethod(TestCase::class, 'getProphet');
-        $refectionMethod->setAccessible(true);
-        return $refectionMethod->invoke($this);
+        return $this->prophet ?? new Prophet();
     }
 
-    /**
-     * @noinspection PhpUnused
-     * @noinspection UnknownInspectionInspection
-     * @noinspection PhpUnhandledExceptionInspection
-     * @noinspection PhpUndefinedClassInspection
-     */
-    public function runBare(): void
+    private function prophecyIsUsed(): bool
     {
-        try {
-            parent::runBare();
-        } finally {
-            if (isset($this->phpProphet)) {
-                $this->phpProphet->unReveal();
+        return isset($this->prophet) || isset($this->prophecyAssertionsCounted);
+    }
+
+    private function phpProphecyIsUsed(): bool
+    {
+        return isset($this->phpProphet);
+    }
+
+    /** @internal */
+    private function countProphecyAssertions(): void
+    {
+        assert($this instanceof TestCase);
+        assert($this->phpProphet !== null);
+        $this->phpProphecyAssertionsCounted = true;
+
+        foreach ($this->phpProphet->prophet->getProphecies() as $objectProphecy) {
+            foreach ($objectProphecy->getMethodProphecies() as $methodProphecies) {
+                foreach ($methodProphecies as $methodProphecy) {
+                    assert($methodProphecy instanceof MethodProphecy);
+
+                    $this->addToAssertionCount(count($methodProphecy->getCheckedPredictions()));
+                }
             }
         }
     }

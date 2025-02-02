@@ -2,6 +2,7 @@
 
 namespace HJerichen\ProphecyPHP;
 
+use Prophecy\Exception\Prediction\PredictionException;
 use Prophecy\Prophet;
 use SebastianBergmann\Template\Template;
 
@@ -10,13 +11,12 @@ use SebastianBergmann\Template\Template;
  */
 class PHPProphet
 {
-    private Prophet $prophet;
     /** @var NamespaceProphecy[] */
     private array $namespaceProphecies = [];
 
-    public function __construct(Prophet $prophet)
-    {
-        $this->prophet = $prophet;
+    public function __construct(
+        public readonly Prophet $prophet
+    ) {
     }
 
     public function prophesize(string $namespace): NamespaceProphecy
@@ -36,6 +36,7 @@ class PHPProphet
         return $this->namespaceProphecies[$namespace];
     }
 
+    /** @throws PredictionException */
     public function checkPredictions(): void
     {
         $this->prophet->checkPredictions();
@@ -46,5 +47,10 @@ class PHPProphet
         foreach ($this->namespaceProphecies as $namespaceProphecy) {
             $namespaceProphecy->unReveal();
         }
+    }
+
+    public function __destruct()
+    {
+        $this->unReveal();
     }
 }
