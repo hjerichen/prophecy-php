@@ -1,36 +1,26 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace HJerichen\ProphecyPHP;
 
 /**
  * @author Heiko Jerichen <heiko@jerichen.de>
+ * @noinspection PhpClassCanBeReadonlyInspection
  */
 class FunctionProphecy
 {
-    private FunctionDelegation $functionDelegation;
-    private ArgumentEvaluator $argumentEvaluator;
-    private string $functionName;
-    private string $namespace;
-    /** @var mixed[] */
-    private array $arguments;
-
     public function __construct(
-        FunctionDelegation $functionDelegation,
-        ArgumentEvaluator $argumentEvaluator,
-        string $functionName,
-        string $namespace,
-        array $arguments
+        private readonly FunctionDelegation $functionDelegation,
+        private readonly ArgumentEvaluator $argumentEvaluator,
+        private readonly string $functionName,
+        private readonly string $namespace,
+        private readonly array $arguments
     ) {
-        $this->functionDelegation = $functionDelegation;
-        $this->argumentEvaluator = $argumentEvaluator;
-        $this->functionName = $functionName;
-        $this->namespace = $namespace;
-        $this->arguments = $arguments;
     }
 
     public function getIdentification(): string
     {
-        return md5("{$this->namespace}::{$this->functionName}::" . serialize($this->arguments));
+        return md5("$this->namespace::$this->functionName::" . serialize($this->arguments));
     }
 
     public function getNamespace(): string
@@ -48,8 +38,7 @@ class FunctionProphecy
         return $this->argumentEvaluator->scoreArguments($arguments) ?: 0;
     }
 
-    /** @return mixed */
-    public function makeCall()
+    public function makeCall(): mixed
     {
         return $this->functionDelegation->delegate($this->functionName, $this->arguments);
     }

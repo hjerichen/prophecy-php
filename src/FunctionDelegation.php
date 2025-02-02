@@ -10,10 +10,8 @@ namespace HJerichen\ProphecyPHP;
 class FunctionDelegation
 {
     /**
-     *
-     * @param string $functionName
-     * @param mixed[] $arguments
      * @return mixed
+     * @noinspection PhpReturnDocTypeMismatchInspection
      */
     public function delegate(string $functionName, array $arguments)
     {

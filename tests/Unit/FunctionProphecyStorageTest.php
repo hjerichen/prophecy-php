@@ -213,18 +213,16 @@ class FunctionProphecyStorageTest extends TestCase
     {
         $this->functionProphecyStorage->add($this->createFunctionProphecy('namespace1', 'time'));
 
-        $expected = true;
         $actual = $this->functionProphecyStorage->hasFunctionPropheciesForFunctionName('namespace1', 'time');
-        self::assertEquals($expected, $actual);
+        self::assertTrue($actual);
     }
 
     public function testHasFunctionPropheciesForFunctionNameWithNotSet(): void
     {
         $this->functionProphecyStorage->add($this->createFunctionProphecy('namespace1', 'time'));
 
-        $expected = false;
         $actual = $this->functionProphecyStorage->hasFunctionPropheciesForFunctionName('namespace1', 'count');
-        self::assertEquals($expected, $actual);
+        self::assertFalse($actual);
     }
 
 
@@ -232,7 +230,7 @@ class FunctionProphecyStorageTest extends TestCase
 
     private function createFunctionProphecy(string $namespace, string $functionName, array $arguments = [], int $score = 10): FunctionProphecy
     {
-        $identification = md5("{$namespace}::{$functionName}::{$score}");
+        $identification = md5("$namespace::$functionName::$score");
 
         $functionProphecy = $this->prophesize(FunctionProphecy::class);
         $functionProphecy->getIdentification()->willReturn($identification);

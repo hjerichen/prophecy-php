@@ -52,7 +52,7 @@ class PHPProphetTest extends TestCase
 
     public function testCheckPredictions(): void
     {
-        $this->prophet->expects(self::once())->method('checkPredictions')->with();
+        $this->prophet->expects($this->once())->method('checkPredictions')->with();
 
         $this->phpProphet->checkPredictions();
     }

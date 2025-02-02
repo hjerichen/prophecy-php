@@ -9,25 +9,16 @@ use Prophecy\Prophet;
 /**
  * @author Heiko Jerichen <heiko@jerichen.de>
  */
-class NamespaceProphecy implements ProphecyInterface
+readonly class NamespaceProphecy implements ProphecyInterface
 {
     use PHPBuiltInFunctions;
 
-    private FunctionProphecyStorage $functionProphecyStorage;
-    private FunctionRevealer $functionRevealer;
-    private Prophet $prophet;
-    private string $namespace;
-
     public function __construct(
-        FunctionProphecyStorage $functionProphecyStorage,
-        FunctionRevealer $functionRevealer,
-        Prophet $prophet,
-        string $namespace
+        private FunctionProphecyStorage $functionProphecyStorage,
+        private FunctionRevealer $functionRevealer,
+        private Prophet $prophet,
+        private string $namespace,
     ) {
-        $this->functionProphecyStorage = $functionProphecyStorage;
-        $this->functionRevealer = $functionRevealer;
-        $this->namespace = $namespace;
-        $this->prophet = $prophet;
     }
 
     public function __call(string $functionName, array $arguments): MethodProphecy

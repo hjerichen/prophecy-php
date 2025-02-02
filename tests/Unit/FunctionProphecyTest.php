@@ -21,8 +21,6 @@ class FunctionProphecyTest extends TestCase
     private ObjectProphecy $argumentEvaluator;
     private string $namespace = 'something';
     private string $functionName = 'time';
-
-    /** @var mixed[] */
     private array $arguments = [true];
 
     protected function setUp(): void

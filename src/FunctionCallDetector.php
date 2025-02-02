@@ -10,7 +10,6 @@ use HJerichen\ProphecyPHP\Exception\FunctionProphecyNotFoundException;
 class FunctionCallDetector
 {
     private static self $instance;
-    private FunctionProphecyStorage $functionProphecyStorage;
 
     public static function getInstance(): FunctionCallDetector
     {
@@ -20,18 +19,12 @@ class FunctionCallDetector
         return self::$instance;
     }
 
-    public function __construct(FunctionProphecyStorage $functionProphecyStorage)
-    {
-        $this->functionProphecyStorage = $functionProphecyStorage;
+    public function __construct(
+        private readonly FunctionProphecyStorage $functionProphecyStorage
+    ) {
     }
 
-    /**
-     * @param string $namespace
-     * @param string $functionName
-     * @param array $arguments
-     * @return mixed
-     */
-    public function functionCalled(string $namespace, string $functionName, array $arguments)
+    public function functionCalled(string $namespace, string $functionName, array $arguments): mixed
     {
         try {
             $functionProphecy = $this->functionProphecyStorage->getFunctionProphecy($namespace, $functionName, $arguments);
@@ -40,7 +33,7 @@ class FunctionCallDetector
             if ($this->functionProphecyStorage->hasFunctionPropheciesForFunctionName($namespace, $functionName)) {
                 throw $exception;
             }
-            return call_user_func_array("\\{$functionName}", $arguments);
+            return call_user_func_array("\\$functionName", $arguments);
         }
     }
 }

@@ -6,14 +6,13 @@ use SebastianBergmann\Template\Template;
 
 /**
  * @author Heiko Jerichen <heiko@jerichen.de>
+ * @noinspection PhpClassCanBeReadonlyInspection
  */
 class FunctionRevealer
 {
-    private Template $textTemplate;
-
-    public function __construct(Template $textTemplate)
-    {
-        $this->textTemplate = $textTemplate;
+    public function __construct(
+        private readonly Template $textTemplate
+    ) {
     }
 
     public function revealFunction(string $namespace, string $functionName): void
@@ -34,6 +33,6 @@ class FunctionRevealer
 
     private function isFunctionAlreadyRevealed(string $namespace, string $functionName): bool
     {
-        return function_exists("{$namespace}\\{$functionName}");
+        return function_exists("$namespace\\$functionName");
     }
 }
