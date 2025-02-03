@@ -64,6 +64,7 @@ class FunctionCallDetectorTest extends TestCase
         $this->functionProphecy->makeCall()->willReturn(1234);
 
         $expected = 1234;
+        /** @var int $actual */
         $actual = $this->functionCallDetector->functionCalled($namespace, $functionName, $arguments);
         self::assertEquals($expected, $actual);
     }
@@ -102,6 +103,7 @@ class FunctionCallDetectorTest extends TestCase
         $this->functionProphecyStorage->hasFunctionPropheciesForFunctionName($namespace, $functionName)->willReturn(false);
 
         $expected = time();
+        /** @var int $actual */
         $actual = $this->functionCallDetector->functionCalled($namespace, $functionName, $arguments);
         self::assertTrue($actual >= $expected);
     }

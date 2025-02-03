@@ -12,6 +12,7 @@ class FunctionDelegation
     /**
      * @return mixed
      * @noinspection PhpReturnDocTypeMismatchInspection
+     * @psalm-suppress InvalidReturnType, PossiblyUnusedParam
      */
     public function delegate(string $functionName, array $arguments)
     {

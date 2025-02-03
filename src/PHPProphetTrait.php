@@ -25,6 +25,7 @@ trait PHPProphetTrait
 
     /**
      * @postCondition
+     * @psalm-suppress PossiblyUnusedMethod
      */
     #[PostCondition]
     protected function verifyPhpProphecyDoubles(): void
@@ -35,6 +36,7 @@ trait PHPProphetTrait
         try {
             $this->phpProphet->checkPredictions();
         } catch (PredictionException $e) {
+            /** @psalm-suppress InternalClass, InternalMethod */
             throw new AssertionFailedError($e->getMessage());
         } finally {
             $this->countProphecyAssertions();
@@ -43,6 +45,7 @@ trait PHPProphetTrait
 
     /**
      * @after
+     * @psalm-suppress PossiblyUnusedMethod
      */
     #[After]
     protected function tearDownPhpProphecy(): void
@@ -84,14 +87,13 @@ trait PHPProphetTrait
     private function countProphecyAssertions(): void
     {
         assert($this instanceof TestCase);
-        assert($this->phpProphet !== null);
+        assert(isset($this->phpProphet));
         $this->phpProphecyAssertionsCounted = true;
 
         foreach ($this->phpProphet->prophet->getProphecies() as $objectProphecy) {
             foreach ($objectProphecy->getMethodProphecies() as $methodProphecies) {
                 foreach ($methodProphecies as $methodProphecy) {
-                    assert($methodProphecy instanceof MethodProphecy);
-
+                    /** @psalm-suppress InternalMethod */
                     $this->addToAssertionCount(count($methodProphecy->getCheckedPredictions()));
                 }
             }

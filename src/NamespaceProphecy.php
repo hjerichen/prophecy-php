@@ -8,6 +8,7 @@ use Prophecy\Prophet;
 
 /**
  * @author Heiko Jerichen <heiko@jerichen.de>
+ * @template-implements ProphecyInterface<self>
  */
 readonly class NamespaceProphecy implements ProphecyInterface
 {
@@ -47,12 +48,13 @@ readonly class NamespaceProphecy implements ProphecyInterface
     /**
      * Reveals prophecy object (double) .
      */
-    public function reveal(): void
+    public function reveal(): self
     {
         $functionNames = $this->functionProphecyStorage->getFunctionNamesOfSetProphecies($this->namespace);
         foreach ($functionNames as $functionName) {
             $this->functionRevealer->revealFunction($this->namespace, $functionName);
         }
+        return $this;
     }
 
     public function unReveal(): void

@@ -87,6 +87,7 @@ class FunctionProphecyTest extends TestCase
         $this->functionDelegation->delegate($this->functionName, $this->arguments)->willReturn('something');
 
         $expected = 'something';
+        /** @var string $actual */
         $actual = $this->functionProphecy->makeCall();
         self::assertEquals($expected, $actual);
     }

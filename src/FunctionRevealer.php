@@ -15,6 +15,7 @@ class FunctionRevealer
     ) {
     }
 
+    /** @psalm-suppress PossiblyUnusedParam */
     public function revealFunction(string $namespace, string $functionName): void
     {
         if ($this->isFunctionAlreadyRevealed($namespace, $functionName)) {

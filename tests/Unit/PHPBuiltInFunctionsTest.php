@@ -24,10 +24,16 @@ class PHPBuiltInFunctionsTest extends TestCase
     use ProphecyTrait;
 
     private NamespaceProphecy $namespaceProphecy;
+
+    /** @var ObjectProphecy<FunctionProphecyStorage>  */
     private ObjectProphecy $functionProphecyStorage;
+    /** @var ObjectProphecy<FunctionDelegation>  */
     private ObjectProphecy $functionDelegation;
+    /** @var ObjectProphecy<MethodProphecy>  */
     private ObjectProphecy $methodProphecy;
+
     private MockObject $objectProphecy;
+
     private string $namespace;
 
     protected function setUp(): void
@@ -36,6 +42,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
         $this->functionDelegation = $this->prophesize(FunctionDelegation::class);
         $this->objectProphecy = $this->createMock(ObjectProphecy::class);
+        /** @psalm-suppress MixedMethodCall */
         $this->objectProphecy->method('reveal')->willReturn($this->functionDelegation->reveal());
         $this->methodProphecy = $this->prophesize(MethodProphecy::class);
 
@@ -202,11 +209,7 @@ class PHPBuiltInFunctionsTest extends TestCase
 
     public function testPcntlSignal(): void
     {
-        $arguments = [
-            2,
-            static function () {
-            }
-        ];
+        $arguments = [2, static function (): void {}];
         $this->setUpCallTest('pcntl_signal', $arguments);
 
         $expected = $this->methodProphecy->reveal();
@@ -395,11 +398,14 @@ class PHPBuiltInFunctionsTest extends TestCase
 
     public function testFWrite(): void
     {
-        $arguments = ['localhost', 'string'];
+        $resource = fopen('php://memory', 'rb+');
+        assert($resource !== false);
+
+        $arguments = [$resource, 'string'];
         $this->setUpCallTest('fwrite', $arguments);
 
         $expected = $this->methodProphecy->reveal();
-        $actual = $this->namespaceProphecy->fwrite(...$arguments);
+        $actual = $this->namespaceProphecy->fwrite($resource, 'string');
         self::assertEquals($expected, $actual);
     }
 

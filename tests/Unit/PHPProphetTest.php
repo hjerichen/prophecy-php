@@ -19,7 +19,7 @@ use SebastianBergmann\Template\Template;
 class PHPProphetTest extends TestCase
 {
     private PHPProphet $phpProphet;
-    private MockObject $prophet;
+    private MockObject&Prophet $prophet;
 
     protected function setUp(): void
     {

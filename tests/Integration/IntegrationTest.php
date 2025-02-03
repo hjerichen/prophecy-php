@@ -75,7 +75,9 @@ class IntegrationTest extends TestCase
 
     public function testFunctionWillReturnSimpleWithProphecyArgument(): void
     {
-        $this->php->date(Argument::any())->willReturn('16.07.2019 21:43:00');
+        /** @var string $any */
+        $any = Argument::any();
+        $this->php->date($any)->willReturn('16.07.2019 21:43:00');
         $this->php->reveal();
 
         self::assertEquals('16.07.2019 21:43:00', date('d.m.Y H:i:s'));
@@ -88,6 +90,7 @@ class IntegrationTest extends TestCase
 
         $this->expectException(FunctionProphecyNotFoundException::class);
 
+        /** @psalm-suppress UnusedFunctionCall */
         date('d.m.Y H:i');
     }
 
@@ -106,6 +109,7 @@ class IntegrationTest extends TestCase
 
         $this->expectException(FunctionProphecyNotFoundException::class);
 
+        /** @psalm-suppress UnusedFunctionCall */
         date('d.m.Y H:i:s');
     }
 
@@ -141,7 +145,9 @@ class IntegrationTest extends TestCase
 
     public function testCalculateCorrectProphecy(): void
     {
-        $this->php->date(Argument::any())->willReturn('2020');
+        /** @var string $any */
+        $any = Argument::any();
+        $this->php->date($any)->willReturn('2020');
         $this->php->date('Y')->willReturn('2019');
         $this->php->reveal();
 
@@ -174,6 +180,7 @@ class IntegrationTest extends TestCase
 
     private function resetProphecy(): void
     {
+        /** @psalm-suppress UndefinedThisPropertyFetch */
         unset($this->prophet, $this->phpProphet);
     }
 }

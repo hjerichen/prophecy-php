@@ -11,7 +11,7 @@ class FunctionProphecyStorage
 {
     private static self $instance;
 
-    /** @var FunctionProphecy[][][] */
+    /** @var array<string,array<string,array<string,FunctionProphecy>>> */
     private array $functionProphecies = [];
 
     public static function getInstance(): FunctionProphecyStorage

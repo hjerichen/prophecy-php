@@ -400,6 +400,7 @@ trait PHPBuiltInFunctions
      * </p>
      * @return MethodProphecy
      * @noinspection PhpUnusedParameterInspection
+     * @psalm-suppress PossiblyUnusedParam
      */
     public function exit($status = null): MethodProphecy
     {
@@ -422,6 +423,7 @@ trait PHPBuiltInFunctions
      * </p>
      * @return MethodProphecy
      * @noinspection PhpUnusedParameterInspection
+     * @psalm-suppress PossiblyUnusedParam
      */
     public function die($status = "") : MethodProphecy
     {

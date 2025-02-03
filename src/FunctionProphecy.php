@@ -35,7 +35,8 @@ class FunctionProphecy
 
     public function scoreArguments(array $arguments): int
     {
-        return $this->argumentEvaluator->scoreArguments($arguments) ?: 0;
+        $score = $this->argumentEvaluator->scoreArguments($arguments);
+        return $score === false ? 0 : $score;
     }
 
     public function makeCall(): mixed

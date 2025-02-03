@@ -25,8 +25,11 @@ class NamespaceProphecyTest extends TestCase
     use ProphecyTrait;
 
     private NamespaceProphecy $namespaceProphecy;
+    /** @var ObjectProphecy<FunctionProphecyStorage> */
     private ObjectProphecy $functionProphecyStorage;
+    /** @var ObjectProphecy<FunctionDelegation> */
     private ObjectProphecy $functionDelegation;
+    /** @var ObjectProphecy<FunctionRevealer> */
     private ObjectProphecy $functionRevealer;
     private ObjectProphecy $methodProphecy;
     private MockObject $objectProphecy;
@@ -43,6 +46,7 @@ class NamespaceProphecyTest extends TestCase
         $this->methodProphecy = $this->prophesize(MethodProphecy::class);
         $this->namespace = 'namespace';
 
+        /** @psalm-suppress MixedMethodCall */
         $this->objectProphecy->method('reveal')->willReturn($this->functionDelegation->reveal());
 
         $prophet = $this->createMock(Prophet::class);
