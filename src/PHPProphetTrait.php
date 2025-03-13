@@ -7,11 +7,11 @@ use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\PostCondition;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Exception\Prediction\PredictionException;
-use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Prophet;
 
 /**
  * @author Heiko Jerichen <heiko@jerichen.de>
+ * @psalm-suppress UndefinedThisPropertyFetch
  */
 trait PHPProphetTrait
 {

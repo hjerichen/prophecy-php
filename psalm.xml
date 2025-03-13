@@ -20,6 +20,9 @@
         <PropertyNotSetInConstructor errorLevel="suppress"/>
         <MissingConstructor errorLevel="suppress"/>
         <InvalidDocblock errorLevel="suppress"/>
+        <MissingOverrideAttribute errorLevel="suppress"/>
+        <UndefinedThisPropertyFetch errorLevel="suppress"/>
+        <ClassMustBeFinal errorLevel="suppress"/>
     </issueHandlers>
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
