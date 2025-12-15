@@ -13,6 +13,7 @@
         <directory name="tests"/>
         <ignoreFiles>
             <directory name="vendor/phpunit"/>
+            <directory name="vendor/phpspec"/>
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
@@ -23,6 +24,10 @@
         <MissingOverrideAttribute errorLevel="suppress"/>
         <UndefinedThisPropertyFetch errorLevel="suppress"/>
         <ClassMustBeFinal errorLevel="suppress"/>
+        <InternalProperty errorLevel="suppress"/>
+        <InternalMethod errorLevel="suppress"/>
+        <MixedMethodCall errorLevel="suppress"/>
+        <UndefinedMagicMethod errorLevel="suppress"/>
     </issueHandlers>
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
