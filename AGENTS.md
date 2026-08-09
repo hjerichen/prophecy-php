@@ -182,18 +182,18 @@ Before considering a task complete:
 
 ## Key Classes and Their Purpose
 
-| Class                     | Purpose                                                      |
-|---------------------------|--------------------------------------------------------------|
-| `PHPProphetTrait`         | Trait for test cases to enable PHP function mocking          |
-| `PHPProphet`              | Main class for creating and managing PHP function prophecies |
-| `NamespaceProphecy`       | Represents a namespace with mocked functions                 |
-| `FunctionProphecy`        | Represents a single mocked function                          |
-| `FunctionProphecyStorage` | Stores and manages function prophecy definitions             |
-| `FunctionRevealer`        | Applies the mocked functions (makes them active)             |
-| `FunctionCallDetector`    | Detects when mocked functions are called                     |
-| `FunctionDelegation`      | Handles delegation of mocked function calls                  |
-| `ArgumentEvaluator`       | Evaluates arguments against expected values                  |
-| `PHPBuiltInFunctions`     | Contains definitions of PHP built-in functions               |
+| Class | Purpose |
+|-------|---------| 
+| `PHPProphetTrait` | Trait for test cases to enable PHP function mocking |
+| `PHPProphet` | Main class for creating and managing PHP function prophecies |
+| `NamespaceProphecy` | Represents a namespace with mocked functions |
+| `FunctionProphecy` | Represents a single mocked function |
+| `FunctionProphecyStorage` | Stores and manages function prophecy definitions |
+| `FunctionRevealer` | Applies the mocked functions (makes them active) |
+| `FunctionCallDetector` | Detects when mocked functions are called |
+| `FunctionDelegation` | Handles delegation of mocked function calls |
+| `ArgumentEvaluator` | Evaluates arguments against expected values |
+| `PHPBuiltInFunctions` | Contains definitions of PHP built-in functions |
 
 ## Common Patterns
 
