@@ -93,7 +93,6 @@ class PHPProphetTraitTest extends TestCase
 
         $reflection = new ReflectionClass($this);
         $method = $reflection->getMethod('countPhpProphecyAssertions');
-        $method->setAccessible(true);
         $method->invoke($this);
     }
 }
