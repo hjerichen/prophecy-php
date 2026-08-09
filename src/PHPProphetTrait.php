@@ -24,7 +24,6 @@ trait PHPProphetTrait
     }
 
     /**
-     * @postCondition
      * @psalm-suppress PossiblyUnusedMethod
      */
     #[PostCondition]
@@ -39,12 +38,11 @@ trait PHPProphetTrait
             /** @psalm-suppress InternalClass, InternalMethod */
             throw new AssertionFailedError($e->getMessage());
         } finally {
-            $this->countProphecyAssertions();
+            $this->countPhpProphecyAssertions();
         }
     }
 
     /**
-     * @after
      * @psalm-suppress PossiblyUnusedMethod
      */
     #[After]
@@ -54,7 +52,7 @@ trait PHPProphetTrait
             if ($this->prophecyIsUsed()) return;
             if (!$this->phpProphecyIsUsed()) return;
             if ($this->phpProphecyAssertionsCounted) return;
-            $this->countProphecyAssertions();
+            $this->countPhpProphecyAssertions();
         } finally {
             unset($this->phpProphet);
         }
@@ -84,7 +82,7 @@ trait PHPProphetTrait
     }
 
     /** @internal */
-    private function countProphecyAssertions(): void
+    private function countPhpProphecyAssertions(): void
     {
         assert($this instanceof TestCase);
         assert(isset($this->phpProphet));
